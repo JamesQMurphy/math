@@ -2,7 +2,7 @@
 
 namespace JamesQMurphy.Matrix
 {
-    public struct Matrix<T>
+    public struct Matrix<T> where T:struct
     {
         private T[,] _actualArray;
 
