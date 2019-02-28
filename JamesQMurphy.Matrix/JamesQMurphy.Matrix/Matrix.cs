@@ -2,7 +2,7 @@
 
 namespace JamesQMurphy.Matrix
 {
-    public struct Matrix<T> where T:struct
+    public struct Matrix<T> where T : struct
     {
         private T[,] _actualArray;
 
@@ -23,6 +23,11 @@ namespace JamesQMurphy.Matrix
             _actualArray = new T[numRows, numColumns];
         }
 
+        public Matrix(T[,] array)
+        {
+            _actualArray = (T[,]) array.Clone();
+        }
+
         public int RowCount
         {
             get { return _array.GetLength(0); }
@@ -36,6 +41,11 @@ namespace JamesQMurphy.Matrix
         {
             get { return _array[i, j]; }
             set { _array[i, j] = value; }
+        }
+
+        public Matrix<T> SubMatrix(int i, int j)
+        {
+            throw new NotImplementedException();
         }
     }
 }

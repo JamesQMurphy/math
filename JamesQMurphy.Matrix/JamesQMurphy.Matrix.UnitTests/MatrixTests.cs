@@ -45,5 +45,36 @@ namespace Tests
             Assert.AreEqual(d1, matrix[0, 0]);
             Assert.AreEqual(d2, matrix[2, 3]);
         }
+
+        [Test]
+        public void CanInitializeWithArray()
+        {
+            double[,] arr = new double[,] { { 1.0d, 2.0d },
+                                            { 3.0d, 4.0d },
+                                            { 5.0d, 6.0d },
+                                            { 7.0d, 8.0d } };
+
+            Matrix<double> matrix = new Matrix<double>(arr);
+
+            for(int i = 0; i < arr.GetLength(0); i++ )
+            {
+                for (int j = 0; j < arr.GetLength(1); j++ )
+                {
+                    Assert.AreEqual(arr[i, j], matrix[i, j]);
+                }
+            }
+
+            // Make sure arrays are independent
+            double originalValue = arr[0, 0];
+            arr[0, 0] = -1000d;
+            Assert.AreEqual(originalValue, matrix[0, 0]);
+
+        }
+
+        [Test]
+        public void TestSubmatrix()
+        {
+            Assert.Fail();
+        }
     }
 }
