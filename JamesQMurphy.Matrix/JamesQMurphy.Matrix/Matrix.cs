@@ -31,5 +31,11 @@ namespace JamesQMurphy.Matrix
         {
             get { return _array.GetLength(1); }
         }
+
+        public T this[int i, int j]
+        {
+            get { return _array[i, j]; }
+            set { _array[i, j] = value; }
+        }
     }
 }
