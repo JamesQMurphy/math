@@ -4,17 +4,18 @@ namespace JamesQMurphy.Matrix
 {
     public struct Matrix<T> where T : struct
     {
+        #region Static Members
+        private static T[,] _emptyArray = new T[0, 0];
+        public static Matrix<T> Empty = new Matrix<T>(_emptyArray);
+        #endregion
+
         private T[,] _actualArray;
 
         private T[,] _array
         {
             get
             {
-                if (_actualArray == null)
-                {
-                    _actualArray = new T[1, 1];
-                }
-                return _actualArray;
+                return _actualArray ?? _emptyArray;
             }
         }
 

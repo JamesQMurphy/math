@@ -18,11 +18,11 @@ namespace Tests
         }
 
         [Test]
-        public void DefaultIs1by1()
+        public void DefaultIsEmpty()
         {
             Matrix<int> matrix;
-            Assert.AreEqual(1, matrix.RowCount);
-            Assert.AreEqual(1, matrix.ColumnCount);
+            Assert.AreEqual(0, matrix.RowCount);
+            Assert.AreEqual(0, matrix.ColumnCount);
         }
 
         [Test]
