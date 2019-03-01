@@ -46,7 +46,15 @@ namespace JamesQMurphy.Matrix
 
         public Matrix<T> SubMatrix(int i, int j)
         {
-            throw new NotImplementedException();
+            var newArray = new T[RowCount - 1, ColumnCount - 1];
+            for(int m = 0; m < RowCount-1; m++)
+            {
+                for (int n = 0; n < ColumnCount-1; n++)
+                {
+                    newArray[m, n] = _array[(m >= i ? m + 1 : m), (n >= j ? n + 1 : n)];
+                }
+            }
+            return new Matrix<T>(newArray);
         }
     }
 }
