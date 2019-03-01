@@ -118,5 +118,58 @@ namespace Tests
             Assert.AreEqual(0, subMatrix.ColumnCount);
         }
 
+        [Test]
+        public void IsSquare()
+        {
+            Assert.IsTrue(new Matrix<int>(1, 1).IsSquare);
+            Assert.IsTrue(new Matrix<int>(2, 2).IsSquare);
+            Assert.IsTrue(new Matrix<int>(4, 4).IsSquare);
+
+            Assert.IsFalse(new Matrix<int>(2, 3).IsSquare);
+            Assert.IsFalse(new Matrix<int>(1, 2).IsSquare);
+            Assert.IsFalse(new Matrix<int>(33, 32).IsSquare);
+        }
+
+        [Test]
+        public void Determinant_Empty()
+        {
+            Assert.AreEqual(1d, Matrix<double>.Empty.Determinant);
+        }
+
+        [Test]
+        public void Determinant_1x1()
+        {
+            var matrix = new Matrix<double>(new double[1, 1] { { 42d } });
+            Assert.AreEqual(42d, matrix.Determinant);
+        }
+
+        [Test]
+        public void Determinant_2x2()
+        {
+            var matrix = new Matrix<double>(new double[2, 2] { { 3d, 4d },
+                                                               { 7d, 5d } });
+            Assert.AreEqual(-13d, matrix.Determinant);
+        }
+
+
+        [Test]
+        public void Determinant_3x3()
+        {
+            var matrix = new Matrix<double>(new double[3, 3] { { 6d, 1d, 1d },
+                                                               { 4d, -2d, 5d },
+                                                               { 2d, 8d, 7d } });
+            Assert.AreEqual(-306d, matrix.Determinant);
+        }
+
+        [Test]
+        public void Determinant_5x5()
+        {
+            var matrix = new Matrix<double>(new double[5, 5] { { 3d, 0d, 22d, -4d, 7d },
+                                                               { 0d, 2d, 14d, 0d, -5d },
+                                                               { -2d, -5d, -3d, 2d, 9d },
+                                                               { 1d, 6d, -2d, 0d, -3d },
+                                                               { -11d, 1d, 0d, 5d, 2d } });
+            Assert.AreEqual(31170d, matrix.Determinant);
+        }
     }
 }

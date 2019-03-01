@@ -38,6 +38,11 @@ namespace JamesQMurphy.Matrix
             get { return _array.GetLength(1); }
         }
 
+        public bool IsSquare
+        {
+            get { return RowCount == ColumnCount; }
+        }
+
         public T this[int i, int j]
         {
             get { return _array[i, j]; }
@@ -55,6 +60,37 @@ namespace JamesQMurphy.Matrix
                 }
             }
             return new Matrix<T>(newArray);
+        }
+
+        public double Determinant
+        {
+            get
+            {
+                if (!IsSquare) throw new InvalidOperationException("Determinant requires matrix to be square");
+
+                switch (RowCount)
+                {
+                    case 0:
+                        return 1d;
+
+                    // Technically not needed, but way faster
+                    case 1:
+                        return Convert.ToDouble(this[0, 0]);
+
+                    // Also technially not needed
+                    case 2:
+                        return Convert.ToDouble(this[0, 0]) * Convert.ToDouble(this[1, 1]) - Convert.ToDouble(this[1, 0]) * Convert.ToDouble(this[0, 1]);
+                }
+
+                double sign = 1.0;
+                double determinant = 0.0;
+                for(int j = 0; j < ColumnCount; j++)
+                {
+                    determinant += sign * Convert.ToDouble(this[0, j]) * SubMatrix(0, j).Determinant;
+                    sign *= -1.0;
+                }
+                return determinant;
+            }
         }
     }
 }
