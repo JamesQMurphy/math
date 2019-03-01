@@ -72,7 +72,7 @@ namespace Tests
         }
 
         [Test]
-        public void TestSubmatrix_3x4()
+        public void Submatrix_3x4()
         {
             var matrix = new Matrix<double>(new double[,] { { 1d, 2d, 3d, 4d },
                                                             { 5d, 6d, 7d, 8d },
@@ -110,7 +110,7 @@ namespace Tests
         }
 
         [Test]
-        public void TestSubmatrix_1x1()
+        public void Submatrix_1x1()
         {
             var matrix = new Matrix<double>(1, 1);
             var subMatrix = matrix.SubMatrix(0, 0);
