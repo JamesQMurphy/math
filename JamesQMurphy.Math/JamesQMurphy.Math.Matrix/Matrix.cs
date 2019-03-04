@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JamesQMurphy.Matrix
+namespace JamesQMurphy.Math
 {
     public struct Matrix<T> where T : struct
     {

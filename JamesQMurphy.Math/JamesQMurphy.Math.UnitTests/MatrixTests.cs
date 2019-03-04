@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using JamesQMurphy.Matrix;
+using JamesQMurphy.Math;
 
 namespace Tests
 {
