@@ -103,6 +103,60 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual(new Complex(1, 21), Operations<Complex>.Multiply(new Complex(1, 4), new Complex(5, 1)));
         }
 
+        [Test]
+        public void constants_int16()
+        {
+            Assert.AreEqual((System.Int16)0, Operations<System.Int16>.Zero);
+            Assert.AreEqual((System.Int16)1, Operations<System.Int16>.One);
+        }
 
+        [Test]
+        public void constants_int32()
+        {
+            Assert.AreEqual((System.Int32)0, Operations<System.Int32>.Zero);
+            Assert.AreEqual((System.Int32)1, Operations<System.Int32>.One);
+        }
+
+        [Test]
+        public void constants_int64()
+        {
+            Assert.AreEqual((System.Int64)0, Operations<System.Int64>.Zero);
+            Assert.AreEqual((System.Int64)1, Operations<System.Int64>.One);
+        }
+
+        [Test]
+        public void constants_float()
+        {
+            Assert.AreEqual(0f, Operations<float>.Zero);
+            Assert.AreEqual(1f, Operations<float>.One);
+        }
+
+        [Test]
+        public void constants_double()
+        {
+            Assert.AreEqual(0d, Operations<double>.Zero);
+            Assert.AreEqual(1d, Operations<double>.One);
+        }
+
+        [Test]
+        public void constants_decimal()
+        {
+            Assert.AreEqual(0m, Operations<decimal>.Zero);
+            Assert.AreEqual(1m, Operations<decimal>.One);
+        }
+
+        [Test]
+        public void constants_biginteger()
+        {
+            Assert.AreEqual(new BigInteger(0), Operations<BigInteger>.Zero);
+            Assert.AreEqual(new BigInteger(1), Operations<BigInteger>.One);
+        }
+
+        [Test]
+        public void constants_complex()
+        {
+            Assert.AreEqual(new Complex(0, 0), Operations<Complex>.Zero);
+            Assert.AreEqual(new Complex(1, 0), Operations<Complex>.One);
+        }
     }
 }
