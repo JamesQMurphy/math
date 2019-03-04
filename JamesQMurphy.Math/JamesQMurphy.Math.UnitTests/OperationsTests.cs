@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using JamesQMurphy.Math;
+using System.Numerics;
 
 namespace JamesQMurphy.Math.UnitTests
 {
@@ -43,6 +44,18 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
+        public void add_biginteger()
+        {
+            Assert.AreEqual(new BigInteger(10), Operations<BigInteger>.Add(new BigInteger(7), new BigInteger(3)));
+        }
+
+        [Test]
+        public void add_complex()
+        {
+            Assert.AreEqual(new Complex(6, 3), Operations<Complex>.Add(new Complex(4, 7), new Complex(2, -4)));
+        }
+
+        [Test]
         public void multiply_int16()
         {
             Assert.AreEqual((System.Int16)1271, Operations<System.Int16>.Multiply((System.Int16)31, (System.Int16)41));
@@ -77,5 +90,19 @@ namespace JamesQMurphy.Math.UnitTests
         {
             Assert.AreEqual(1271m, Operations<decimal>.Multiply(31m, 41m));
         }
+
+        [Test]
+        public void multiply_biginteger()
+        {
+            Assert.AreEqual(new BigInteger(1271), Operations<BigInteger>.Multiply(new BigInteger(31), new BigInteger(41)));
+        }
+
+        [Test]
+        public void multiply_complex()
+        {
+            Assert.AreEqual(new Complex(1, 21), Operations<Complex>.Multiply(new Complex(1, 4), new Complex(5, 1)));
+        }
+
+
     }
 }
