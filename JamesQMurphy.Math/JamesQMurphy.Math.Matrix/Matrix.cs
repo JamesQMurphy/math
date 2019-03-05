@@ -62,7 +62,7 @@ namespace JamesQMurphy.Math
             return new Matrix<T>(newArray);
         }
 
-        public double Determinant
+        public T Determinant
         {
             get
             {
@@ -71,23 +71,34 @@ namespace JamesQMurphy.Math
                 switch (RowCount)
                 {
                     case 0:
-                        return 1d;
+                        return Operations<T>.One;
 
                     // Technically not needed, but way faster
                     case 1:
-                        return Convert.ToDouble(this[0, 0]);
+                        return this[0, 0];
 
                     // Also technially not needed
                     case 2:
-                        return Convert.ToDouble(this[0, 0]) * Convert.ToDouble(this[1, 1]) - Convert.ToDouble(this[1, 0]) * Convert.ToDouble(this[0, 1]);
+                        return Operations<T>.Subtract(
+                                Operations<T>.Multiply(this[0, 0], this[1, 1]),
+                                Operations<T>.Multiply(this[1, 0], this[0, 1])
+                            );
                 }
 
-                double sign = 1.0;
-                double determinant = 0.0;
+                T determinant = default(T);
                 for(int j = 0; j < ColumnCount; j++)
                 {
-                    determinant += sign * Convert.ToDouble(this[0, j]) * SubMatrix(0, j).Determinant;
-                    sign *= -1.0;
+                    T term = Operations<T>.Multiply(this[0, j], SubMatrix(0, j).Determinant);
+                    
+                    // add odd terms, subtract even terms (and remember that j is zero based)
+                    if (j % 2 == 0)
+                    {
+                        determinant = Operations<T>.Add(determinant, term);
+                    }
+                    else
+                    {
+                        determinant = Operations<T>.Subtract(determinant, term);
+                    }
                 }
                 return determinant;
             }
