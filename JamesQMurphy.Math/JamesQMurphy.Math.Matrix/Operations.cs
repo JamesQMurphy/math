@@ -69,22 +69,38 @@ namespace JamesQMurphy.Math
 
         public static T Add(T left, T right)
         {
-            return _InvokeBinaryOperation(_binaryOperations.op_Addition, left, right);
+            var exprLeft = Expression.Parameter(typeof(T));
+            var exprRight = Expression.Parameter(typeof(T));
+            var body = Expression.Block(Expression.Add(exprLeft, exprRight));
+            var run = Expression.Lambda(body, exprLeft, exprRight).Compile();
+            return (T)run.DynamicInvoke(left, right);
         }
 
         public static T Subtract(T left, T right)
         {
-            return _InvokeBinaryOperation(_binaryOperations.op_Subtraction, left, right);
+            var exprLeft = Expression.Parameter(typeof(T));
+            var exprRight = Expression.Parameter(typeof(T));
+            var body = Expression.Block(Expression.Subtract(exprLeft, exprRight));
+            var run = Expression.Lambda(body, exprLeft, exprRight).Compile();
+            return (T)run.DynamicInvoke(left, right);
         }
 
         public static T Multiply(T left, T right)
         {
-            return _InvokeBinaryOperation(_binaryOperations.op_Multiply, left, right);
+            var exprLeft = Expression.Parameter(typeof(T));
+            var exprRight = Expression.Parameter(typeof(T));
+            var body = Expression.Block(Expression.Multiply(exprLeft, exprRight));
+            var run = Expression.Lambda(body, exprLeft, exprRight).Compile();
+            return (T)run.DynamicInvoke(left, right);
         }
 
         public static T Divide(T left, T right)
         {
-            return _InvokeBinaryOperation(_binaryOperations.op_Division, left, right);
+            var exprLeft = Expression.Parameter(typeof(T));
+            var exprRight = Expression.Parameter(typeof(T));
+            var body = Expression.Block(Expression.Divide(exprLeft, exprRight));
+            var run = Expression.Lambda(body, exprLeft, exprRight).Compile();
+            return (T)run.DynamicInvoke(left, right);
         }
 
 
