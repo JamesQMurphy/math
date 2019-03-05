@@ -56,6 +56,55 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
+        public void subtract_int16()
+        {
+            Assert.AreEqual((System.Int16)4, Operations<System.Int16>.Subtract((System.Int16)7, (System.Int16)3));
+        }
+
+        [Test]
+        public void subtract_int32()
+        {
+            Assert.AreEqual(4, Operations<System.Int32>.Subtract(7, 3));
+        }
+
+        [Test]
+        public void subtract_int64()
+        {
+            Assert.AreEqual(4L, Operations<System.Int64>.Subtract(7L, 3L));
+        }
+
+        [Test]
+        public void subtract_float()
+        {
+            Assert.AreEqual(4f, Operations<float>.Subtract(7f, 3f));
+        }
+
+        [Test]
+        public void subtract_double()
+        {
+            Assert.AreEqual(4d, Operations<double>.Subtract(7d, 3d));
+        }
+
+        [Test]
+        public void subtract_decimal()
+        {
+            Assert.AreEqual(4m, Operations<decimal>.Subtract(7m, 3m));
+        }
+
+        [Test]
+        public void subtract_biginteger()
+        {
+            Assert.AreEqual(new BigInteger(4), Operations<BigInteger>.Subtract(new BigInteger(7), new BigInteger(3)));
+        }
+
+        [Test]
+        public void subtract_complex()
+        {
+            Assert.AreEqual(new Complex(2, 11), Operations<Complex>.Subtract(new Complex(4, 7), new Complex(2, -4)));
+        }
+
+
+        [Test]
         public void multiply_int16()
         {
             Assert.AreEqual((System.Int16)1271, Operations<System.Int16>.Multiply((System.Int16)31, (System.Int16)41));
@@ -101,6 +150,55 @@ namespace JamesQMurphy.Math.UnitTests
         public void multiply_complex()
         {
             Assert.AreEqual(new Complex(1, 21), Operations<Complex>.Multiply(new Complex(1, 4), new Complex(5, 1)));
+        }
+
+
+        [Test]
+        public void divide_int16()
+        {
+            Assert.AreEqual((System.Int16)11, Operations<System.Int16>.Divide((System.Int16)143, (System.Int16)13));
+        }
+
+        [Test]
+        public void divide_int32()
+        {
+            Assert.AreEqual(11, Operations<System.Int32>.Divide(143, 13));
+        }
+
+        [Test]
+        public void divide_int64()
+        {
+            Assert.AreEqual(11L, Operations<System.Int64>.Divide(143L, 13L));
+        }
+
+        [Test]
+        public void divide_float()
+        {
+            Assert.AreEqual(11f, Operations<float>.Divide(143f, 13f));
+        }
+
+        [Test]
+        public void divide_double()
+        {
+            Assert.AreEqual(11d, Operations<double>.Divide(143d, 13d));
+        }
+
+        [Test]
+        public void divide_decimal()
+        {
+            Assert.AreEqual(11m, Operations<decimal>.Divide(143m, 13m));
+        }
+
+        [Test]
+        public void divide_biginteger()
+        {
+            Assert.AreEqual(new BigInteger(11), Operations<BigInteger>.Divide(new BigInteger(143), new BigInteger(13)));
+        }
+
+        [Test]
+        public void divide_complex()
+        {
+            Assert.AreEqual(new Complex(0.24d, 0.68d), Operations<Complex>.Divide(new Complex(3, 2), new Complex(4, -3)));
         }
 
         [Test]

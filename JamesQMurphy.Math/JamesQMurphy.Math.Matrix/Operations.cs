@@ -80,6 +80,19 @@ namespace JamesQMurphy.Math
         public static double Add(double left, double right) { return left + right; }
         #endregion
 
+        #region Subtract
+        public static T Subtract(T left, T right)
+        {
+            return _InvokeBinaryOperation(_binaryOperations.op_Subtraction, left, right);
+        }
+
+        public static System.Int16 Subtract(System.Int16 left, System.Int16 right) { return (System.Int16)(left - right); }
+        public static System.Int32 Subtract(System.Int32 left, System.Int32 right) { return left - right; }
+        public static System.Int64 Subtract(System.Int64 left, System.Int64 right) { return left - right; }
+        public static float Subtract(float left, float right) { return left - right; }
+        public static double Subtract(double left, double right) { return left - right; }
+        #endregion
+
         #region Multiply
         public static T Multiply(T left, T right)
         {
@@ -91,5 +104,20 @@ namespace JamesQMurphy.Math
         public static float Multiply(float left, float right) { return left * right; }
         public static double Multiply(double left, double right) { return left * right; }
         #endregion
+
+        #region Divide
+        public static T Divide(T left, T right)
+        {
+            return _InvokeBinaryOperation(_binaryOperations.op_Division, left, right);
+        }
+
+        public static System.Int16 Divide(System.Int16 left, System.Int16 right) { return (System.Int16)(left / right); }
+        public static System.Int32 Divide(System.Int32 left, System.Int32 right) { return left / right; }
+        public static System.Int64 Divide(System.Int64 left, System.Int64 right) { return left / right; }
+        public static float Divide(float left, float right) { return left / right; }
+        public static double Divide(double left, double right) { return left / right; }
+        #endregion
+
+
     }
 }
