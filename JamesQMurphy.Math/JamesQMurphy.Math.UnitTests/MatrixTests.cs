@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using JamesQMurphy.Math;
+using System.Numerics;
 
 namespace Tests
 {
@@ -153,7 +154,16 @@ namespace Tests
 
 
         [Test]
-        public void Determinant_3x3()
+        public void Determinant_3x3_int()
+        {
+            var matrix = new Matrix<int>(new int[3, 3]       { { 6, 1, 1 },
+                                                               { 4, -2, 5 },
+                                                               { 2, 8, 7 } });
+            Assert.AreEqual(-306, matrix.Determinant);
+        }
+
+        [Test]
+        public void Determinant_3x3_double()
         {
             var matrix = new Matrix<double>(new double[3, 3] { { 6d, 1d, 1d },
                                                                { 4d, -2d, 5d },
@@ -162,7 +172,19 @@ namespace Tests
         }
 
         [Test]
-        public void Determinant_5x5()
+        public void Determinant_3x3_complex()
+        {
+            var matrix = new Matrix<Complex>(3,3);
+            matrix[0, 0] = 1; matrix[0, 1] = 2;                matrix[0, 2] = 3;
+            matrix[1, 0] = 1; matrix[1, 1] = new Complex(4,1); matrix[1, 2] = 5;
+            matrix[2, 0] = 6; matrix[2, 1] = 2;                matrix[2, 2] = 2;
+
+
+            Assert.AreEqual(new Complex(-12,-16), matrix.Determinant);
+        }
+
+        [Test]
+        public void Determinant_5x5_double()
         {
             var matrix = new Matrix<double>(new double[5, 5] { { 3d, 0d, 22d, -4d, 7d },
                                                                { 0d, 2d, 14d, 0d, -5d },
@@ -170,6 +192,16 @@ namespace Tests
                                                                { 1d, 6d, -2d, 0d, -3d },
                                                                { -11d, 1d, 0d, 5d, 2d } });
             Assert.AreEqual(31170d, matrix.Determinant);
+        }
+        [Test]
+        public void Determinant_5x5_decimal()
+        {
+            var matrix = new Matrix<decimal>(new decimal[5, 5] { { 3m, 0m, 22m, -4m, 7m },
+                                                                 { 0m, 2m, 14m, 0m, -5m },
+                                                                 { -2m, -5m, -3m, 2m, 9m },
+                                                                 { 1m, 6m, -2m, 0m, -3m },
+                                                                 { -11m, 1m, 0m, 5m, 2m } });
+            Assert.AreEqual(31170m, matrix.Determinant);
         }
     }
 }
