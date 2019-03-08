@@ -4,13 +4,25 @@ using System.Text;
 
 namespace JamesQMurphy.Math
 {
-    public struct Quantity<T> where T : struct
+    public readonly struct Quantity
     {
-        // This holds the numeric quantity
-        private T _value;
+        private readonly double _SIvalue;
+        private readonly UnitExponents _unitExponents;
 
-        // This holds the units
-        private Int64 _units;
+        public Quantity(double value, Unit unit)
+        {
+            _SIvalue = value / unit.ConversionFactor;
+            _unitExponents = unit.UnitExponents;
+        }
+
+        public double In(Unit unit)
+        {
+            if (!_unitExponents.Equals(unit.UnitExponents))
+            {
+                throw new ArgumentException($"Cannot convert to unit {unit.Symbol}", "unit");
+            }
+            return _SIvalue * unit.ConversionFactor;
+        }
 
 
     }
