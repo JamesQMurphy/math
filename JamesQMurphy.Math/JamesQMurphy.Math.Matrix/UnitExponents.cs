@@ -165,6 +165,17 @@ namespace JamesQMurphy.Math
             return UnitExponents.Equals(this, (UnitExponents)obj);
         }
 
+        public override int GetHashCode()
+        {
+            return (int)_length &
+                   ((int)_mass << 4) &
+                   ((int)_time << 8) &
+                   ((int)_electricCurrent << 12) &
+                   ((int)_temperature << 16) &
+                   ((int)_amountOfSubstance << 20) &
+                   ((int)_luminousIntensity << 24);
+        }
+
         public static bool Equals(UnitExponents left, UnitExponents right)
         {
             return (left._length == right._length)
