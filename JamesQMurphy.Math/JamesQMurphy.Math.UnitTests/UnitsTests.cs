@@ -71,17 +71,18 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual("kg/m", new UnitExponents(-1, 1, 0, 0, 0, 0, 0).ToString());
             Assert.AreEqual("m/s", new UnitExponents(1, 0, -1, 0, 0, 0, 0).ToString());
             Assert.AreEqual("kg/s", new UnitExponents(0, 1, -1, 0, 0, 0, 0).ToString());
-            Assert.AreEqual("cd/s", new UnitExponents(0, 0, -1, 0, 0, 0, -1).ToString());
+            Assert.AreEqual("cd/s", new UnitExponents(0, 0, -1, 0, 0, 0, 1).ToString());
         }
 
         [Test]
         public void SymbolComplicated()
         {
-            Assert.AreEqual("K/(s*mol)", new UnitExponents(0, 0, -1, 0, 1, 1, 0).ToString());
+            Assert.AreEqual("K/(s*mol)", new UnitExponents(0, 0, -1, 0, 1, -1, 0).ToString());
             Assert.AreEqual("m*kg/s", new UnitExponents(1, 1, -1, 0, 0, 0, 0).ToString());
             Assert.AreEqual("m*kg/s^2", new UnitExponents(1, 1, -2, 0, 0, 0, 0).ToString());
             Assert.AreEqual("m*kg/(K*mol)", new UnitExponents(1, 1, 0, 0, -1, -1, 0).ToString());
-            Assert.AreEqual("m^2*s^3/(kg^2*K*mol^3)", new UnitExponents(2, -2, 3, 0, 1, -3, 0).ToString());
+            Assert.AreEqual("m^2*s^3/(kg^2*K*mol^3)", new UnitExponents(2, -2, 3, 0, -1, -3, 0).ToString());
+            Assert.AreEqual("m^2*s^3*K/(kg^2*mol^3)", new UnitExponents(2, -2, 3, 0, 1, -3, 0).ToString());
         }
 
     }
