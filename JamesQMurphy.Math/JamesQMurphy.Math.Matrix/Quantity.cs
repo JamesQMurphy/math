@@ -24,6 +24,9 @@ namespace JamesQMurphy.Math
             return _SIvalue * unit.ConversionFactor;
         }
 
-
+        public override string ToString()
+        {
+            return $"{_SIvalue} {_unitExponents}";
+        }
     }
 }
