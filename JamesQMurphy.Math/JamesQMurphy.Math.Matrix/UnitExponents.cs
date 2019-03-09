@@ -157,5 +157,68 @@ namespace JamesQMurphy.Math
         {
             return _getUnitString();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != typeof(UnitExponents))
+                return false;
+            return UnitExponents.Equals(this, (UnitExponents)obj);
+        }
+
+        public static bool Equals(UnitExponents left, UnitExponents right)
+        {
+            return (left._length == right._length)
+                && (left._mass == right._mass)
+                && (left._time == right._time)
+                && (left._electricCurrent == right._electricCurrent)
+                && (left._temperature == right._temperature)
+                && (left._amountOfSubstance == right._amountOfSubstance)
+                && (left._luminousIntensity == right._luminousIntensity);
+        }
+
+        public static UnitExponents Multiply(UnitExponents left, UnitExponents right)
+        {
+            return new UnitExponents(
+                (Int16)(left.Length + right.Length),
+                (Int16)(left.Mass + right.Mass),
+                (Int16)(left.Time + right.Time),
+                (Int16)(left.ElectricCurrent + right.ElectricCurrent),
+                (Int16)(left.Temperature + right.Temperature),
+                (Int16)(left.AmountOfSubstance + right.AmountOfSubstance),
+                (Int16)(left.LuminousIntensity + right.LuminousIntensity)
+                );
+        }
+
+        public static UnitExponents Divide(UnitExponents left, UnitExponents right)
+        {
+            return new UnitExponents(
+                (Int16)(left.Length - right.Length),
+                (Int16)(left.Mass - right.Mass),
+                (Int16)(left.Time - right.Time),
+                (Int16)(left.ElectricCurrent - right.ElectricCurrent),
+                (Int16)(left.Temperature - right.Temperature),
+                (Int16)(left.AmountOfSubstance - right.AmountOfSubstance),
+                (Int16)(left.LuminousIntensity - right.LuminousIntensity)
+                );
+        }
+
+        #region Operator Overloads
+        public static bool operator ==(UnitExponents left, UnitExponents right)
+        {
+            return UnitExponents.Equals(left, right);
+        }
+        public static bool operator !=(UnitExponents left, UnitExponents right)
+        {
+            return !UnitExponents.Equals(left, right);
+        }
+        public static UnitExponents operator *(UnitExponents left, UnitExponents right)
+        {
+            return Multiply(left, right);
+        }
+        public static UnitExponents operator /(UnitExponents left, UnitExponents right)
+        {
+            return Divide(left, right);
+        }
+        #endregion
     }
 }
