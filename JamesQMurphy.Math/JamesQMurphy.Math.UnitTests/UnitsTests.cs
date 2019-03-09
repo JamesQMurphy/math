@@ -8,13 +8,13 @@ namespace JamesQMurphy.Math.UnitTests
         [Test]
         public void SingleSymbol()
         {
-            Assert.AreEqual("m", Units.Meter.ToString());
-            Assert.AreEqual("kg", Units.Kilogram.ToString());
-            Assert.AreEqual("s", Units.Second.ToString());
-            Assert.AreEqual("A", Units.Ampere.ToString());
-            Assert.AreEqual("K", Units.Kelvin.ToString());
-            Assert.AreEqual("mol", Units.Mole.ToString());
-            Assert.AreEqual("cd", Units.Candela.ToString());
+            Assert.AreEqual("m", new UnitExponents(1, 0, 0, 0, 0, 0, 0).ToString());
+            Assert.AreEqual("kg", new UnitExponents(0, 1, 0, 0, 0, 0, 0).ToString());
+            Assert.AreEqual("s", new UnitExponents(0, 0, 1, 0, 0, 0, 0).ToString());
+            Assert.AreEqual("A", new UnitExponents(0, 0, 0, 1, 0, 0, 0).ToString());
+            Assert.AreEqual("K", new UnitExponents(0, 0, 0, 0, 1, 0, 0).ToString());
+            Assert.AreEqual("mol", new UnitExponents(0, 0, 0, 0, 0, 1, 0).ToString());
+            Assert.AreEqual("cd", new UnitExponents(0, 0, 0, 0, 0, 0, 1).ToString());
         }
 
         [Test]
