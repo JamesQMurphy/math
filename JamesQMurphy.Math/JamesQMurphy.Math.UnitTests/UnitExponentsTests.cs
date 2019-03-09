@@ -3,7 +3,7 @@ using JamesQMurphy.Math;
 
 namespace JamesQMurphy.Math.UnitTests
 {
-    public class UnitsTests
+    public class UnitExponentsTests
     {
         [Test]
         public void SingleSymbol()
