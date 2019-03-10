@@ -111,7 +111,7 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
-        public void CompositeUnitsUseUnitsSupplied()
+        public void CompositeUnitsUseUnitsSupplied1()
         {
             var kilowatt = new Unit(2, 1, -3, 0, 0, 0, 0, 1000d, "kW");
             var hour = new Unit(0, 0, 1, 0, 0, 0, 0, 3600d, "h");
@@ -127,5 +127,22 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual(3600000d, kilowatt_hour.ConversionFactor);
             Assert.AreEqual("kW*h", kilowatt_hour.ToString());
         }
+
+        [Test]
+        public void CompositeUnitsUseUnitsSupplied2()
+        {
+            var footPerSecond = Units.Foot / Units.Second;
+
+            Assert.AreEqual(1, footPerSecond.UnitExponents.Length);
+            Assert.AreEqual(0, footPerSecond.UnitExponents.Mass);
+            Assert.AreEqual(-1, footPerSecond.UnitExponents.Time);
+            Assert.AreEqual(0, footPerSecond.UnitExponents.ElectricCurrent);
+            Assert.AreEqual(0, footPerSecond.UnitExponents.Temperature);
+            Assert.AreEqual(0, footPerSecond.UnitExponents.AmountOfSubstance);
+            Assert.AreEqual(0, footPerSecond.UnitExponents.LuminousIntensity);
+            Assert.AreEqual(3.28d, footPerSecond.ConversionFactor, 0.001d);
+            Assert.AreEqual("ft/s", footPerSecond.ToString());
+        }
+
     }
 }
