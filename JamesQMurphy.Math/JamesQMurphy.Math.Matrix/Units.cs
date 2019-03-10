@@ -96,19 +96,25 @@ namespace JamesQMurphy.Math
 
         public static Unit Multiply(Unit left, Unit right)
         {
+            var up = new UnitParser();
+            up.Append(left.Symbol);
+            up.Append(right.Symbol);
             return new Unit(
                     left.UnitExponents * right.UnitExponents,
                     left.ConversionFactor * right.ConversionFactor,
-                    left.Symbol + "*" + right.Symbol
+                    up.ToString()
                 );
         }
 
         public static Unit Divide(Unit left, Unit right)
         {
+            var up = new UnitParser();
+            up.Append(left.Symbol);
+            up.AppendFlipped(right.Symbol);
             return new Unit(
                     left.UnitExponents / right.UnitExponents,
                     left.ConversionFactor / right.ConversionFactor,
-                    left.Symbol + "/" + right.Symbol
+                    up.ToString()
                 );
         }
 
