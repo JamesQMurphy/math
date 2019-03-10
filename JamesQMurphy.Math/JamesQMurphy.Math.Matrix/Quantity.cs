@@ -72,11 +72,35 @@ namespace JamesQMurphy.Math
                 );
         }
 
+        public static Quantity Multiply(double left, Quantity right)
+        {
+            return new Quantity(
+                    left * right._SIvalue,
+                    right._unitExponents
+                );
+        }
+
+        public static Quantity Multiply(Quantity left, double right)
+        {
+            return new Quantity(
+                    left._SIvalue * right,
+                    left._unitExponents
+                );
+        }
+
         public static Quantity Divide(Quantity left, Quantity right)
         {
             return new Quantity(
                     left._SIvalue / right._SIvalue,
                     left._unitExponents / right._unitExponents
+                );
+        }
+
+        public static Quantity Divide(Quantity left, double right)
+        {
+            return new Quantity(
+                    left._SIvalue / right,
+                    left._unitExponents
                 );
         }
 
@@ -93,7 +117,19 @@ namespace JamesQMurphy.Math
         {
             return Multiply(left, right);
         }
+        public static Quantity operator *(double left, Quantity right)
+        {
+            return Multiply(left, right);
+        }
+        public static Quantity operator *(Quantity left, double right)
+        {
+            return Multiply(left, right);
+        }
         public static Quantity operator /(Quantity left, Quantity right)
+        {
+            return Divide(left, right);
+        }
+        public static Quantity operator /(Quantity left, double right)
         {
             return Divide(left, right);
         }

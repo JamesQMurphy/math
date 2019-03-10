@@ -34,6 +34,24 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
+        public void CanMultiplyByScalar()
+        {
+            var q = new Quantity(2d, Units.Kilogram);
+            var q2 = 4.0d * q;
+            var q3 = q * 4.0d;
+            Assert.AreEqual(new Quantity(8d, Units.Kilogram), q2);
+            Assert.AreEqual(new Quantity(8d, Units.Kilogram), q3);
+        }
+
+        [Test]
+        public void CanDivideByScalar()
+        {
+            var q = new Quantity(8d, Units.Mole);
+            var q2 = q / 4.0d;
+            Assert.AreEqual(new Quantity(2d, Units.Mole), q2);
+        }
+
+        [Test]
         public void Calculation1()
         {
             var accel = new Quantity(15d, Units.Meter / (Units.Second * Units.Second));
