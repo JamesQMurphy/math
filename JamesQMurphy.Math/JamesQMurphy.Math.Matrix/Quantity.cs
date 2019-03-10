@@ -15,6 +15,12 @@ namespace JamesQMurphy.Math
             _unitExponents = unit.UnitExponents;
         }
 
+        private Quantity(double value, UnitExponents unitExponents)
+        {
+            _SIvalue = value;
+            _unitExponents = unitExponents;
+        }
+
         public double In(Unit unit)
         {
             if (!_unitExponents.Equals(unit.UnitExponents))
@@ -28,5 +34,69 @@ namespace JamesQMurphy.Math
         {
             return $"{_SIvalue} {_unitExponents}";
         }
+
+        public string ToString(Unit asUnit)
+        {
+            if (_unitExponents != asUnit.UnitExponents)
+            {
+                throw new ArgumentException($"Cannot express {_unitExponents} in units of {asUnit}", "asUnit");
+            }
+            return $"{_SIvalue * asUnit.ConversionFactor} {asUnit}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != typeof(Quantity))
+            {
+                return false;
+            }
+            return Quantity.Equals(this, (Quantity)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _SIvalue.GetHashCode() ^ _unitExponents.GetHashCode();
+        }
+
+        public static bool Equals(Quantity left, Quantity right)
+        {
+            return (left._SIvalue == right._SIvalue)
+                && (left._unitExponents == right._unitExponents);
+        }
+
+        public static Quantity Multiply(Quantity left, Quantity right)
+        {
+            return new Quantity(
+                    left._SIvalue * right._SIvalue,
+                    left._unitExponents * right._unitExponents
+                );
+        }
+
+        public static Quantity Divide(Quantity left, Quantity right)
+        {
+            return new Quantity(
+                    left._SIvalue / right._SIvalue,
+                    left._unitExponents / right._unitExponents
+                );
+        }
+
+        #region Operator Overloads
+        public static bool operator ==(Quantity left, Quantity right)
+        {
+            return Quantity.Equals(left, right);
+        }
+        public static bool operator !=(Quantity left, Quantity right)
+        {
+            return !Quantity.Equals(left, right);
+        }
+        public static Quantity operator *(Quantity left, Quantity right)
+        {
+            return Multiply(left, right);
+        }
+        public static Quantity operator /(Quantity left, Quantity right)
+        {
+            return Divide(left, right);
+        }
+        #endregion
     }
 }

@@ -30,6 +30,19 @@ namespace JamesQMurphy.Math.UnitTests
         {
             var q = new Quantity(1d, Units.Meter);
             Assert.Throws<ArgumentException>(()=> q.In(Units.Kilogram));
+            Assert.Throws<ArgumentException>(() => q.ToString(Units.Kilogram));
+        }
+
+        [Test]
+        public void Calculation1()
+        {
+            var accel = new Quantity(15d, Units.Meter / (Units.Second * Units.Second));
+            var mass = new Quantity(5d, Units.Kilogram);
+            var force = mass * accel;
+            Assert.AreEqual("75 m*kg/s^2", force.ToString());
+            Assert.AreEqual(new Quantity(75d, Units.Newton), force);
+            Assert.AreEqual(75d, force.In(Units.Newton));
+            Assert.AreEqual("75 N", force.ToString(Units.Newton));
         }
     }
 }
