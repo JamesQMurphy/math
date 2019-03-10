@@ -49,6 +49,17 @@ namespace JamesQMurphy.Math.UnitTests
             var q = new Quantity(8d, Units.Mole);
             var q2 = q / 4.0d;
             Assert.AreEqual(new Quantity(2d, Units.Mole), q2);
+
+            var q3 = 4.0d / q;
+            Assert.AreEqual(new Quantity(0.5d, new Unit(0, 0, 0, 0, 0, -1, 0, 1.0d)), q3);
+        }
+
+        [Test]
+        public void Reciprocal()
+        {
+            var q = new Quantity(8d, Units.Second);
+            var q2 = q.Reciprocal;
+            Assert.AreEqual(new Quantity(0.125d, Units.Hertz), q2);
         }
 
         [Test]

@@ -21,6 +21,25 @@ namespace JamesQMurphy.Math
             _unitExponents = unitExponents;
         }
 
+        public Quantity Reciprocal
+        {
+            get
+            {
+                return new Quantity(
+                    1.0d / _SIvalue,
+                    new UnitExponents(
+                        (Int16)(0 - _unitExponents.Length),
+                        (Int16)(0 - _unitExponents.Mass),
+                        (Int16)(0 - _unitExponents.Time),
+                        (Int16)(0 - _unitExponents.ElectricCurrent),
+                        (Int16)(0 - _unitExponents.Temperature),
+                        (Int16)(0 - _unitExponents.AmountOfSubstance),
+                        (Int16)(0 - _unitExponents.LuminousIntensity)
+                    )
+                );
+            }
+        }
+
         public double In(Unit unit)
         {
             if (!_unitExponents.Equals(unit.UnitExponents))
@@ -103,6 +122,10 @@ namespace JamesQMurphy.Math
                     left._unitExponents
                 );
         }
+        public static Quantity Divide(double left, Quantity right)
+        {
+            return Multiply(left, right.Reciprocal);
+        }
 
         #region Operator Overloads
         public static bool operator ==(Quantity left, Quantity right)
@@ -130,6 +153,10 @@ namespace JamesQMurphy.Math
             return Divide(left, right);
         }
         public static Quantity operator /(Quantity left, double right)
+        {
+            return Divide(left, right);
+        }
+        public static Quantity operator /(double left, Quantity right)
         {
             return Divide(left, right);
         }

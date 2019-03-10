@@ -153,6 +153,7 @@ namespace JamesQMurphy.Math
         public static Unit Kilometer = new Unit(1, 0, 0, 0, 0, 0, 0, 0.001d, "km");
 
         // SI Derived Units
+        public static Unit Hertz  = new Unit(0, 0, -1, 0, 0, 0, 0, 1.0d, "Hz");
         public static Unit Newton = new Unit(1, 1, -2, 0, 0, 0, 0, 1.0d, "N");
 
         // Imperial units
