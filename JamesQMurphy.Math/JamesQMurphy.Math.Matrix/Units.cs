@@ -140,6 +140,10 @@ namespace JamesQMurphy.Math
 
     public static class Units
     {
+        // Dimensionless
+        public static Unit None = new Unit(0, 0, 0, 0, 0, 0, 0, 1.0d);
+        public static Unit Dimensionless = new Unit(0, 0, 0, 0, 0, 0, 0, 1.0d);
+
         // SI Base Units
         public static Unit Meter    = new Unit(1, 0, 0, 0, 0, 0, 0, 1.0d);
         public static Unit Kilogram = new Unit(0, 1, 0, 0, 0, 0, 0, 1.0d);

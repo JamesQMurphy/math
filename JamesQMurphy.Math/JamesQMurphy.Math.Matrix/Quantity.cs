@@ -51,7 +51,7 @@ namespace JamesQMurphy.Math
 
         public override string ToString()
         {
-            return $"{_SIvalue} {_unitExponents}";
+            return $"{_SIvalue} {_unitExponents}".TrimEnd();
         }
 
         public string ToString(Unit asUnit)

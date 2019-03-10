@@ -7,6 +7,15 @@ namespace JamesQMurphy.Math.UnitTests
     public class QuantityTests
     {
         [Test]
+        public void DefaultIsZero()
+        {
+            var q = default(Quantity);
+
+            Assert.AreEqual(0d, q.In(Units.Dimensionless));
+            Assert.AreEqual("0", q.ToString());
+        }
+
+        [Test]
         public void ToString_NoParameters_BaseUnits()
         {
             Assert.AreEqual("2 m", new Quantity(2d, Units.Meter).ToString());
