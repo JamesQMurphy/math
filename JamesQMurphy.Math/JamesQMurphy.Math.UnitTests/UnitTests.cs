@@ -109,5 +109,23 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual(1.0d, uQuotient.ConversionFactor);
             Assert.AreEqual("one/(two*three)", uQuotient.Symbol);
         }
+
+        [Test]
+        public void CompositeUnitsUseUnitsSupplied()
+        {
+            var kilowatt = new Unit(2, 1, -3, 0, 0, 0, 0, 1000d, "kW");
+            var hour = new Unit(0, 0, 1, 0, 0, 0, 0, 3600d, "h");
+            var kilowatt_hour = kilowatt * hour;
+
+            Assert.AreEqual(2, kilowatt_hour.UnitExponents.Length);
+            Assert.AreEqual(1, kilowatt_hour.UnitExponents.Mass);
+            Assert.AreEqual(-2, kilowatt_hour.UnitExponents.Time);
+            Assert.AreEqual(0, kilowatt_hour.UnitExponents.ElectricCurrent);
+            Assert.AreEqual(0, kilowatt_hour.UnitExponents.Temperature);
+            Assert.AreEqual(0, kilowatt_hour.UnitExponents.AmountOfSubstance);
+            Assert.AreEqual(0, kilowatt_hour.UnitExponents.LuminousIntensity);
+            Assert.AreEqual(3600000d, kilowatt_hour.ConversionFactor);
+            Assert.AreEqual("kW*h", kilowatt_hour.ToString());
+        }
     }
 }
