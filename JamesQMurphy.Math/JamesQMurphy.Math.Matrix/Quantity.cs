@@ -11,7 +11,7 @@ namespace JamesQMurphy.Math
 
         public Quantity(double value, Unit unit)
         {
-            _SIvalue = value / unit.ConversionFactor;
+            _SIvalue = unit.ConvertToSI(value);
             _unitExponents = unit.UnitExponents;
         }
 
@@ -46,7 +46,7 @@ namespace JamesQMurphy.Math
             {
                 throw new ArgumentException($"Cannot convert to unit {unit.Symbol}", "unit");
             }
-            return _SIvalue * unit.ConversionFactor;
+            return unit.ConvertFromSI(_SIvalue);
         }
 
         public override string ToString()
@@ -60,7 +60,7 @@ namespace JamesQMurphy.Math
             {
                 throw new ArgumentException($"Cannot express {_unitExponents} in units of {asUnit}", "asUnit");
             }
-            return $"{_SIvalue * asUnit.ConversionFactor} {asUnit}";
+            return $"{asUnit.ConvertFromSI(_SIvalue)} {asUnit}";
         }
 
         public override bool Equals(object obj)

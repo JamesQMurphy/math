@@ -35,6 +35,13 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
+        public void CanConvertTemperature()
+        {
+            var q = new Quantity(212d, Units.DegreesFahrenheit);
+            Assert.AreEqual(100d, q.In(Units.DegreesCelsius), 1e-9d);
+        }
+
+        [Test]
         public void ThrowsConversionException()
         {
             var q = new Quantity(1d, Units.Meter);
