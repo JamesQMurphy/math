@@ -215,8 +215,11 @@ namespace JamesQMurphy.Math
         public static Unit Kilometer = new Unit(1, 0, 0, 0, 0, 0, 0, 0.001d, "km");
 
         // SI Derived Units
+        public static Unit Liter  = new Unit(3, 0, 0, 0, 0, 0, 0, 1000d, "L");
         public static Unit Hertz  = new Unit(0, 0, -1, 0, 0, 0, 0, 1.0d, "Hz");
         public static Unit Newton = new Unit(1, 1, -2, 0, 0, 0, 0, 1.0d, "N");
+        public static Unit Pascal = new Unit(-1, 1, -2, 0, 0, 0, 0, 1.0d, "Pa");
+        public static Unit Joule  = new Unit(2, 1, -2, 0, 0, 0, 0, 1.0d, "J");
 
         // Other SI Units
 
@@ -230,6 +233,9 @@ namespace JamesQMurphy.Math
         // Temperature units use special converters
         public static Unit DegreesCelsius = new Unit(0, 0, 0, 0, 1, 0, 0, (k) => k - 273.15d, (c) => c + 273.15d, "°C");
         public static Unit DegreesFahrenheit = new Unit(0, 0, 0, 0, 1, 0, 0, (k)=>1.8d*(k-273.15d) + 32d, (f) => (f-32d)*5d/9d + 273.15d, "°F");
+
+        // Miscellaneous Units
+        public static Unit Atmosphere = new Unit(-1, 1, -2, 0, 0, 0, 0, 9.8692e-6d, "atm");
 
 
         public static double Convert(double value, Unit from, Unit to)
