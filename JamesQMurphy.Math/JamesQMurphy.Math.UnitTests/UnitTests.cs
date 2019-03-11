@@ -150,5 +150,12 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual(24d, Units.Convert(2d, Units.Foot, Units.Inch), 1e-9d);
         }
 
+        [Test]
+        public void ConvertTemperature()
+        {
+            Assert.AreEqual(273.15d, Units.Convert(0d, Units.DegreesCelsius, Units.Kelvin), 1e-9);
+            Assert.AreEqual(491.67d, Units.Convert(0d, Units.DegreesCelsius, Units.Rankine), 1e-9);
+            Assert.AreEqual(32d, Units.Convert(0d, Units.DegreesCelsius, Units.DegreesFahrenheit), 1e-9);
+        }
     }
 }

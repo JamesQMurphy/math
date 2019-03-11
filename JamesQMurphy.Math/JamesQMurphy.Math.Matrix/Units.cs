@@ -160,11 +160,16 @@ namespace JamesQMurphy.Math
         public static Unit Hertz  = new Unit(0, 0, -1, 0, 0, 0, 0, 1.0d, "Hz");
         public static Unit Newton = new Unit(1, 1, -2, 0, 0, 0, 0, 1.0d, "N");
 
+        // Other SI Units
+        public static Unit DegreesCelsius = new Unit(0, 0, 0, 0, 1, 0, 0, 1.0d, "°C");
+
         // Imperial units
         // Source: https://www.unitconverters.net
         public static Unit Yard = new Unit(1, 0, 0, 0, 0, 0, 0, 1.0936132983d, "yd");
         public static Unit Foot = new Unit(1, 0, 0, 0, 0, 0, 0, 3.280839895d, "ft");
         public static Unit Inch = new Unit(1, 0, 0, 0, 0, 0, 0, 39.37007874d, "in");
+        public static Unit Rankine = new Unit(0, 0, 0, 0, 1, 0, 0, 1.8d, "°R");
+        public static Unit DegreesFahrenheit = new Unit(0, 0, 0, 0, 1, 0, 0, 1.8d, "°F");
 
         public static double Convert(double value, Unit from, Unit to)
         {
