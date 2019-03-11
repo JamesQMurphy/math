@@ -161,8 +161,16 @@ namespace JamesQMurphy.Math
         public static Unit Newton = new Unit(1, 1, -2, 0, 0, 0, 0, 1.0d, "N");
 
         // Imperial units
-        public static Unit Foot = new Unit(1, 0, 0, 0, 0, 0, 0, 3.28084d, "ft");
-        public static Unit Inch = new Unit(1, 0, 0, 0, 0, 0, 0, 1.09361d, "in");
+        // Source: https://www.unitconverters.net
+        public static Unit Yard = new Unit(1, 0, 0, 0, 0, 0, 0, 1.0936132983d, "yd");
+        public static Unit Foot = new Unit(1, 0, 0, 0, 0, 0, 0, 3.280839895d, "ft");
+        public static Unit Inch = new Unit(1, 0, 0, 0, 0, 0, 0, 39.37007874d, "in");
+
+        public static double Convert(double value, Unit from, Unit to)
+        {
+            return value * to.ConversionFactor / from.ConversionFactor;
+        }
+
     }
 
 

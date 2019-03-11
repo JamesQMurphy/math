@@ -144,5 +144,11 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual("ft/s", footPerSecond.ToString());
         }
 
+        [Test]
+        public void Convert()
+        {
+            Assert.AreEqual(24d, Units.Convert(2d, Units.Foot, Units.Inch), 1e-9d);
+        }
+
     }
 }
