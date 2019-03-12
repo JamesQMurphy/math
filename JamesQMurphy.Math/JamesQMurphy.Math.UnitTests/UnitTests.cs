@@ -71,7 +71,7 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual(-3, uProduct.UnitExponents.Temperature);
             Assert.AreEqual(-4, uProduct.UnitExponents.AmountOfSubstance);
             Assert.AreEqual(0, uProduct.UnitExponents.LuminousIntensity);
-            Assert.AreEqual(8.0d, uProduct.ConversionFactor);
+            Assert.AreEqual(8.0d, uProduct.ConvertFromSI(1.0d));
             Assert.AreEqual("one*two", uProduct.Symbol);
         }
 
@@ -88,7 +88,7 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual(-3, uQuotient.UnitExponents.Temperature);
             Assert.AreEqual(0, uQuotient.UnitExponents.AmountOfSubstance);
             Assert.AreEqual(2, uQuotient.UnitExponents.LuminousIntensity);
-            Assert.AreEqual(2.0d, uQuotient.ConversionFactor);
+            Assert.AreEqual(2.0d, uQuotient.ConvertFromSI(1.0d));
             Assert.AreEqual("one/two", uQuotient.Symbol);
         }
 
@@ -106,15 +106,35 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual(-7, uQuotient.UnitExponents.Temperature);
             Assert.AreEqual(2, uQuotient.UnitExponents.AmountOfSubstance);
             Assert.AreEqual(3, uQuotient.UnitExponents.LuminousIntensity);
-            Assert.AreEqual(1.0d, uQuotient.ConversionFactor);
+            Assert.AreEqual(1.0d, uQuotient.ConvertFromSI(1.0d));
             Assert.AreEqual("one/(two*three)", uQuotient.Symbol);
+        }
+
+        [Test]
+        public void CannotMultiplyCelsiusOrFahrenheit()
+        {
+            Assert.Throws<System.InvalidOperationException>(() => { var u = Units.DegreesCelsius * Units.Mole; });
+            Assert.Throws<System.InvalidOperationException>(() => { var u = Units.DegreesFahrenheit * Units.Mole; });
+        }
+
+        [Test]
+        public void CannotDivideCelsiusOrFahrenheit()
+        {
+            Assert.Throws<System.InvalidOperationException>(() => { var u = Units.DegreesCelsius / Units.Mole; });
+            Assert.Throws<System.InvalidOperationException>(() => { var u = Units.DegreesFahrenheit / Units.Mole; });
+        }
+
+        [Test]
+        public void CelsiusNotEqualToFahrenheit()
+        {
+            Assert.AreNotEqual(Units.DegreesCelsius, Units.DegreesFahrenheit);
         }
 
         [Test]
         public void CompositeUnitsUseUnitsSupplied1()
         {
-            var kilowatt = new Unit(2, 1, -3, 0, 0, 0, 0, 1000d, "kW");
-            var hour = new Unit(0, 0, 1, 0, 0, 0, 0, 3600d, "h");
+            var kilowatt = new Unit(2, 1, -3, 0, 0, 0, 0, 0.001d, "kW");
+            var hour = new Unit(0, 0, 1, 0, 0, 0, 0, 1.0d/3600d, "h");
             var kilowatt_hour = kilowatt * hour;
 
             Assert.AreEqual(2, kilowatt_hour.UnitExponents.Length);
@@ -124,7 +144,7 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual(0, kilowatt_hour.UnitExponents.Temperature);
             Assert.AreEqual(0, kilowatt_hour.UnitExponents.AmountOfSubstance);
             Assert.AreEqual(0, kilowatt_hour.UnitExponents.LuminousIntensity);
-            Assert.AreEqual(3600000d, kilowatt_hour.ConversionFactor);
+            Assert.AreEqual(3600000d, kilowatt_hour.ConvertToSI(1.0d), 1e-9d);
             Assert.AreEqual("kW*h", kilowatt_hour.ToString());
         }
 
@@ -140,7 +160,7 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual(0, footPerSecond.UnitExponents.Temperature);
             Assert.AreEqual(0, footPerSecond.UnitExponents.AmountOfSubstance);
             Assert.AreEqual(0, footPerSecond.UnitExponents.LuminousIntensity);
-            Assert.AreEqual(3.28d, footPerSecond.ConversionFactor, 0.001d);
+            Assert.AreEqual(3.28d, footPerSecond.ConvertFromSI(1.0d), 0.001d);
             Assert.AreEqual("ft/s", footPerSecond.ToString());
         }
 
@@ -148,7 +168,15 @@ namespace JamesQMurphy.Math.UnitTests
         public void Convert()
         {
             Assert.AreEqual(24d, Units.Convert(2d, Units.Foot, Units.Inch), 1e-9d);
+            Assert.AreEqual(2000d, Units.Convert(2d, Units.Kilometer, Units.Meter), 1e-9d);
         }
 
+        [Test]
+        public void ConvertTemperature()
+        {
+            Assert.AreEqual(273.15d, Units.Convert(0d, Units.DegreesCelsius, Units.Kelvin), 1e-9);
+            Assert.AreEqual(491.67d, Units.Convert(0d, Units.DegreesCelsius, Units.Rankine), 1e-9);
+            Assert.AreEqual(32d, Units.Convert(0d, Units.DegreesCelsius, Units.DegreesFahrenheit), 1e-9);
+        }
     }
 }

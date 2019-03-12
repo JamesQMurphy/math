@@ -7,21 +7,21 @@ namespace JamesQMurphy.Math
     public class Unit
     {
         public UnitExponents UnitExponents { get; }
-        public double ConversionFactor { get; }
         public string Symbol { get; }
+        public Func<double, double> ConvertToSI { get; }
+        public Func<double, double> ConvertFromSI { get; }
+
+        private readonly double _conversionFactor;
 
         public Unit(
             UnitExponents unitExponents,
             double conversionFactor
-            )
+            ) : this(unitExponents, conversionFactor, unitExponents.ToString())
         {
-            UnitExponents = unitExponents;
-            ConversionFactor = conversionFactor;
             if (conversionFactor != 1.0d)
             {
-                throw new System.InvalidOperationException("Symbol is required if ConversionFactor is not equal to 1.0");
+                throw new InvalidOperationException("Symbol is required if ConversionFactor is not equal to 1.0");
             }
-            Symbol = unitExponents.ToString();
         }
 
         public Unit(
@@ -30,8 +30,28 @@ namespace JamesQMurphy.Math
             string symbol
             )
         {
+            if (conversionFactor == 0d)
+            {
+                throw new ArgumentException("ConversionFactor must not be zero", "conversionFactor");
+            }
             UnitExponents = unitExponents;
-            ConversionFactor = conversionFactor;
+            _conversionFactor = conversionFactor;
+            ConvertToSI = d => d / _conversionFactor;
+            ConvertFromSI = d => d * _conversionFactor;
+            Symbol = symbol;
+        }
+
+        public Unit(
+            UnitExponents unitExponents,
+            Func<double, double> convertFromSI,
+            Func<double, double> convertToSI,
+            string symbol
+            )
+        {
+            UnitExponents = unitExponents;
+            _conversionFactor = 0d;
+            ConvertToSI = convertToSI;
+            ConvertFromSI = convertFromSI;
             Symbol = symbol;
         }
 
@@ -47,6 +67,26 @@ namespace JamesQMurphy.Math
             ) : this(
                 new UnitExponents(length, mass, time, electricCurrent, temperature, amountOfSubstance, luminousIntensity),
                 conversionFactor
+                )
+        {
+        }
+
+        public Unit(
+            Int16 length,
+            Int16 mass,
+            Int16 time,
+            Int16 electricCurrent,
+            Int16 temperature,
+            Int16 amountOfSubstance,
+            Int16 luminousIntensity,
+            Func<double, double> convertFromSI,
+            Func<double, double> convertToSI,
+            string symbol
+            ) : this(
+                new UnitExponents(length, mass, time, electricCurrent, temperature, amountOfSubstance, luminousIntensity),
+                convertFromSI,
+                convertToSI,
+                symbol
                 )
         {
         }
@@ -85,35 +125,53 @@ namespace JamesQMurphy.Math
 
         public override int GetHashCode()
         {
-            return UnitExponents.GetHashCode() ^ ConversionFactor.GetHashCode();
+            return UnitExponents.GetHashCode() ^ _conversionFactor.GetHashCode();
         }
 
         public static bool Equals(Unit left, Unit right)
         {
             return (left.UnitExponents == right.UnitExponents)
-                && (left.ConversionFactor == right.ConversionFactor);
+                && (left._conversionFactor == right._conversionFactor)
+                && (left._conversionFactor != 0d)
+                && (right._conversionFactor != 0d);
         }
 
         public static Unit Multiply(Unit left, Unit right)
         {
+            if (left._conversionFactor == 0d)
+            {
+                throw new InvalidOperationException($"Cannot multiply ${left} because it has a special conversion function");
+            }
+            if (right._conversionFactor == 0d)
+            {
+                throw new InvalidOperationException($"Cannot multiply ${right} because it has a special conversion function");
+            }
             var up = new UnitParser();
             up.Append(left.Symbol);
             up.Append(right.Symbol);
             return new Unit(
                     left.UnitExponents * right.UnitExponents,
-                    left.ConversionFactor * right.ConversionFactor,
+                    left._conversionFactor * right._conversionFactor,
                     up.ToString()
                 );
         }
 
         public static Unit Divide(Unit left, Unit right)
         {
+            if (left._conversionFactor == 0d)
+            {
+                throw new InvalidOperationException($"Cannot divide ${left} because it has a special conversion function");
+            }
+            if (right._conversionFactor == 0d)
+            {
+                throw new InvalidOperationException($"Cannot divide ${right} because it has a special conversion function");
+            }
             var up = new UnitParser();
             up.Append(left.Symbol);
             up.AppendFlipped(right.Symbol);
             return new Unit(
                     left.UnitExponents / right.UnitExponents,
-                    left.ConversionFactor / right.ConversionFactor,
+                    left._conversionFactor / right._conversionFactor,
                     up.ToString()
                 );
         }
@@ -157,18 +215,32 @@ namespace JamesQMurphy.Math
         public static Unit Kilometer = new Unit(1, 0, 0, 0, 0, 0, 0, 0.001d, "km");
 
         // SI Derived Units
+        public static Unit Liter  = new Unit(3, 0, 0, 0, 0, 0, 0, 1000d, "L");
         public static Unit Hertz  = new Unit(0, 0, -1, 0, 0, 0, 0, 1.0d, "Hz");
         public static Unit Newton = new Unit(1, 1, -2, 0, 0, 0, 0, 1.0d, "N");
+        public static Unit Pascal = new Unit(-1, 1, -2, 0, 0, 0, 0, 1.0d, "Pa");
+        public static Unit Joule  = new Unit(2, 1, -2, 0, 0, 0, 0, 1.0d, "J");
+
+        // Other SI Units
 
         // Imperial units
         // Source: https://www.unitconverters.net
         public static Unit Yard = new Unit(1, 0, 0, 0, 0, 0, 0, 1.0936132983d, "yd");
         public static Unit Foot = new Unit(1, 0, 0, 0, 0, 0, 0, 3.280839895d, "ft");
         public static Unit Inch = new Unit(1, 0, 0, 0, 0, 0, 0, 39.37007874d, "in");
+        public static Unit Rankine = new Unit(0, 0, 0, 0, 1, 0, 0, 1.8d, "°R");
+
+        // Temperature units use special converters
+        public static Unit DegreesCelsius = new Unit(0, 0, 0, 0, 1, 0, 0, (k) => k - 273.15d, (c) => c + 273.15d, "°C");
+        public static Unit DegreesFahrenheit = new Unit(0, 0, 0, 0, 1, 0, 0, (k)=>1.8d*(k-273.15d) + 32d, (f) => (f-32d)*5d/9d + 273.15d, "°F");
+
+        // Miscellaneous Units
+        public static Unit Atmosphere = new Unit(-1, 1, -2, 0, 0, 0, 0, 9.8692e-6d, "atm");
+
 
         public static double Convert(double value, Unit from, Unit to)
         {
-            return value * to.ConversionFactor / from.ConversionFactor;
+            return to.ConvertFromSI(from.ConvertToSI(value));
         }
 
     }

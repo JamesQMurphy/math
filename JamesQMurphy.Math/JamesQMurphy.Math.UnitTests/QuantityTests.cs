@@ -35,6 +35,13 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
+        public void CanConvertTemperature()
+        {
+            var q = new Quantity(212d, Units.DegreesFahrenheit);
+            Assert.AreEqual(100d, q.In(Units.DegreesCelsius), 1e-9d);
+        }
+
+        [Test]
         public void ThrowsConversionException()
         {
             var q = new Quantity(1d, Units.Meter);
@@ -81,6 +88,23 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual(new Quantity(75d, Units.Newton), force);
             Assert.AreEqual(75d, force.In(Units.Newton));
             Assert.AreEqual("75 N", force.ToString(Units.Newton));
+        }
+
+        [Test]
+        public void Calculation2()
+        {
+            // At what temperature will 0.654 moles of neon gas occupy 12.30 liters at 1.95 atmospheres?
+            // source:  https://www.chemteam.info/GasLaw/Gas-Ideal-Prob1-10.html (Problem #3)
+
+            var P = new Quantity(1.95, Units.Atmosphere);
+            var V = new Quantity(12.30, Units.Liter);
+            var n = new Quantity(0.654, Units.Mole);
+
+            // We can specify the gas constant in *any* units
+            var R = new Quantity(8.3144598, Units.Joule / (Units.Mole * Units.Kelvin));
+
+            var T = P * V / (n * R);
+            Assert.AreEqual(447d, T.In(Units.Kelvin), 0.5d);
         }
     }
 }
