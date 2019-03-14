@@ -203,5 +203,61 @@ namespace JamesQMurphy.Math.UnitTests
                                                                  { -11m, 1m, 0m, 5m, 2m } });
             Assert.AreEqual(31170m, matrix.Determinant);
         }
+
+
+        [Test]
+        public void Transpose_empty()
+        {
+            Matrix<double> matrix;
+            var transpose = matrix.Transpose;
+            Assert.AreEqual(0, transpose.RowCount);
+            Assert.AreEqual(0, transpose.ColumnCount);
+        }
+
+        [Test]
+        public void Transpose_1x1()
+        {
+            Matrix<double> matrix = new Matrix<double>(1, 1);
+            var value = 4.0d;
+            matrix[0, 0] = value;
+            var transpose = matrix.Transpose;
+            Assert.AreEqual(1, transpose.RowCount);
+            Assert.AreEqual(1, transpose.ColumnCount);
+            Assert.AreEqual(value, transpose[0, 0]);
+        }
+
+        [Test]
+        public void Transpose_1x3()
+        {
+            Matrix<double> matrix = new Matrix<double>(1, 3);
+            var value1 = 4.0d;
+            var value2 = 5.0d;
+            var value3 = -3.0d;
+            matrix[0, 0] = value1;
+            matrix[0, 1] = value2;
+            matrix[0, 2] = value3;
+            var transpose = matrix.Transpose;
+            Assert.AreEqual(3, transpose.RowCount);
+            Assert.AreEqual(1, transpose.ColumnCount);
+            Assert.AreEqual(value1, transpose[0, 0]);
+            Assert.AreEqual(value2, transpose[1, 0]);
+            Assert.AreEqual(value3, transpose[2, 0]);
+        }
+
+        [Test]
+        public void Transpose_4x3()
+        {
+            var arr = new int[,] { { 2, 3, 4 }, { 10, -3, 5 }, { 7, 7, 7 }, { -1, -1, 3 } };
+
+            Matrix<int> matrix = new Matrix<int>(arr);
+            var transpose = matrix.Transpose;
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 3; j++)
+                {
+                    Assert.AreEqual(arr[i, j], transpose[j, i]);
+                }
+
+        }
+
     }
 }

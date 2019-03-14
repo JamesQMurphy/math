@@ -103,5 +103,29 @@ namespace JamesQMurphy.Math
                 return determinant;
             }
         }
+
+        public T Trace
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Matrix<T> Inverse
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Matrix<T> Transpose
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
