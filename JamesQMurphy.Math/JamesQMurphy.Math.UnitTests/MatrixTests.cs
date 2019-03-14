@@ -2,9 +2,9 @@ using NUnit.Framework;
 using JamesQMurphy.Math;
 using System.Numerics;
 
-namespace Tests
+namespace JamesQMurphy.Math.UnitTests
 {
-    public class Tests
+    public class MatrixTests
     {
         [SetUp]
         public void Setup()
