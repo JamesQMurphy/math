@@ -29,6 +29,20 @@ namespace JamesQMurphy.Math
             _actualArray = (T[,]) array.Clone();
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != typeof(Matrix<T>))
+            {
+                return false;
+            }
+            throw new NotImplementedException();
+        }
+
+        public override int GetHashCode()
+        {
+            return _array.GetHashCode();
+        }
+
         public int RowCount
         {
             get { return _array.GetLength(0); }
@@ -124,8 +138,72 @@ namespace JamesQMurphy.Math
         {
             get
             {
-                throw new NotImplementedException();
+                var transpose = new T[ColumnCount, RowCount];
+                for (int i = 0; i < RowCount; i++)
+                {
+                    for (int j = 0; j < ColumnCount; j++)
+                    {
+                        transpose[j, i] = _array[i, j];
+                    }
+                }
+                return new Matrix<T>(transpose);
             }
         }
+
+        #region Static methods
+
+        public static Matrix<T> Add(Matrix<T> left, Matrix<T> right)
+        {
+            throw new NotImplementedException();
+        }
+        public static Matrix<T> Subtract(Matrix<T> left, Matrix<T> right)
+        {
+            throw new NotImplementedException();
+        }
+        public static Matrix<T> Multiply(T left, Matrix<T> right)
+        {
+            throw new NotImplementedException();
+        }
+        public static Matrix<T> Multiply(Matrix<T> left, T right)
+        {
+            return Matrix<T>.Multiply(right, left);
+        }
+        public static Matrix<T> Multiply(Matrix<T> left, Matrix<T> right)
+        {
+            throw new NotImplementedException();
+        }
+        public static Matrix<T> Divide(Matrix<T> left, T right)
+        {
+            var inverse = Operations<T>.Divide(Operations<T>.One, right);
+            return Matrix<T>.Multiply(inverse, left);
+        }
+        #endregion
+
+        #region Operator Overloads
+        public static bool operator ==(Matrix<T> left, Matrix<T> right)
+        {
+            return Matrix<T>.Equals(left, right);
+        }
+        public static bool operator !=(Matrix<T> left, Matrix<T> right)
+        {
+            return !Matrix<T>.Equals(left, right);
+        }
+        public static Matrix<T> operator *(Matrix<T> left, Matrix<T> right)
+        {
+            return Multiply(left, right);
+        }
+        public static Matrix<T> operator *(T left, Matrix<T> right)
+        {
+            return Multiply(left, right);
+        }
+        public static Matrix<T> operator *(Matrix<T> left, T right)
+        {
+            return Multiply(left, right);
+        }
+        public static Matrix<T> operator /(Matrix<T> left, T right)
+        {
+            return Divide(left, right);
+        }
+        #endregion
     }
 }

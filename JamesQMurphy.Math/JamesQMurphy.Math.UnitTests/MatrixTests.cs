@@ -73,6 +73,42 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
+        public void Add_1x1()
+        {
+            Assert.Fail("TODO");
+        }
+
+        [Test]
+        public void Subtract_1x1()
+        {
+            Assert.Fail("TODO");
+        }
+
+        [Test]
+        public void Multiply_1x1()
+        {
+            Assert.Fail("TODO");
+        }
+
+        public void Divide_1x1()
+        {
+            Assert.Fail("TODO");
+        }
+
+        [Test]
+        public void Equality()
+        {
+            Assert.Fail("TODO");
+        }
+
+        [Test]
+        public void Inequality()
+        {
+            Assert.Fail("TODO");
+        }
+
+
+        [Test]
         public void Submatrix_3x4()
         {
             var matrix = new Matrix<double>(new double[,] { { 1d, 2d, 3d, 4d },
@@ -259,5 +295,33 @@ namespace JamesQMurphy.Math.UnitTests
 
         }
 
+        [Test]
+        public void Inverse_2x2()
+        {
+            var matrix = new Matrix<double>(new double[2, 2] { { 4d, 7d }, { 2d, 6d } });
+            var inverse = matrix.Inverse;
+            Assert.AreEqual(0.6d, inverse[0, 0]);
+            Assert.AreEqual(-0.7d, inverse[0, 1]);
+            Assert.AreEqual(-0.2d, inverse[1, 0]);
+            Assert.AreEqual(0.4d, inverse[1, 1]);
+        }
+
+        [Test]
+        public void Inverse_3x3()
+        {
+            // https://www.mathsisfun.com/algebra/matrix-inverse-minors-cofactors-adjugate.html
+
+            var matrix = new Matrix<double>(new double[3, 3] { { 3d, 0d, 2d }, { 2d, 0d, -2d }, { 0d, 1d, 1d} });
+            var inverse = matrix.Inverse;
+            Assert.AreEqual(0.2d, inverse[0, 0]);
+            Assert.AreEqual(0.2d, inverse[0, 1]);
+            Assert.AreEqual(0d, inverse[0, 2]);
+            Assert.AreEqual(-0.2d, inverse[1, 0]);
+            Assert.AreEqual(0.3d, inverse[1, 1]);
+            Assert.AreEqual(1.0d, inverse[1, 2]);
+            Assert.AreEqual(0.2d, inverse[2, 0]);
+            Assert.AreEqual(-0.3d, inverse[2, 1]);
+            Assert.AreEqual(0d, inverse[2, 2]);
+        }
     }
 }
