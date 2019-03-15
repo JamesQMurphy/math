@@ -96,6 +96,15 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
+        public void Equality_empty()
+        {
+            var empty1 = new Matrix<float>();
+            var empty2 = Matrix<float>.Empty;
+            Assert.AreEqual(empty1, empty2);
+            Assert.IsTrue(empty1 == empty2);
+            Assert.IsTrue(empty1.Equals(empty2));
+        }
+
         public void Equality()
         {
             Assert.Fail("TODO");
