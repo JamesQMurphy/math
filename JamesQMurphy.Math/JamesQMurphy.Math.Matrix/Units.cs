@@ -215,11 +215,20 @@ namespace JamesQMurphy.Math
         public static Unit Kilometer = new Unit(1, 0, 0, 0, 0, 0, 0, 0.001d, "km");
 
         // SI Derived Units
-        public static Unit Liter  = new Unit(3, 0, 0, 0, 0, 0, 0, 1000d, "L");
-        public static Unit Hertz  = new Unit(0, 0, -1, 0, 0, 0, 0, 1.0d, "Hz");
-        public static Unit Newton = new Unit(1, 1, -2, 0, 0, 0, 0, 1.0d, "N");
-        public static Unit Pascal = new Unit(-1, 1, -2, 0, 0, 0, 0, 1.0d, "Pa");
-        public static Unit Joule  = new Unit(2, 1, -2, 0, 0, 0, 0, 1.0d, "J");
+        public static Unit Liter   = new Unit(3, 0, 0, 0, 0, 0, 0, 1000d, "L");
+        public static Unit Hertz   = new Unit(0, 0, -1, 0, 0, 0, 0, 1.0d, "Hz");
+        public static Unit Newton  = new Unit(1, 1, -2, 0, 0, 0, 0, 1.0d, "N");
+        public static Unit Pascal  = new Unit(-1, 1, -2, 0, 0, 0, 0, 1.0d, "Pa");
+        public static Unit Joule   = new Unit(2, 1, -2, 0, 0, 0, 0, 1.0d, "J");
+        public static Unit Watt    = new Unit(2, 1, -3, 0, 0, 0, 0, 1.0d, "W");
+        public static Unit Coulomb = new Unit(0, 0, 1, 1, 0, 0, 0, 1.0d, "C");
+        public static Unit Volt    = new Unit(2, 1, -3, -1, 0, 0, 0, 1.0d, "V");
+        public static Unit Farad   = new Unit(-2, -1, 4, 2, 0, 0, 0, 1.0d, "F");
+        public static Unit Ohm     = new Unit(2, 1, -3, -2, 0, 0, 0, 1.0d, "Ω");
+        public static Unit Siemens = new Unit(-2, -1, 3, 2, 0, 0, 0, 1.0d, "S");
+        public static Unit Weber   = new Unit(2, 1, -2, -1, 0, 0, 0, 1.0d, "Wb");
+        public static Unit Tesla   = new Unit(0, 1, -2, -1, 0, 0, 0, 1.0d, "T");
+        public static Unit Henry   = new Unit(2, 1, -2, -2, 0, 0, 0, 1.0d, "H");
 
         // Other SI Units
 
