@@ -436,14 +436,23 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
+        public void Cofactor()
+        {
+            var m = new Matrix<double>(new double[,] { { 3d, 0d, 2d }, { 2d, 0d, -2d }, { 0d, 1d, 1d } });
+
+            var expected = new Matrix<double>(new double[,] { { 2d, -2d, 2d }, { 2d, 3d, -3d }, { 0d, 10d, 0d } });
+            Assert.AreEqual(expected, m.Cofactor);
+        }
+
+        [Test]
         public void Inverse_2x2()
         {
             var matrix = new Matrix<double>(new double[2, 2] { { 4d, 7d }, { 2d, 6d } });
             var inverse = matrix.Inverse;
-            Assert.AreEqual(0.6d, inverse[0, 0]);
-            Assert.AreEqual(-0.7d, inverse[0, 1]);
-            Assert.AreEqual(-0.2d, inverse[1, 0]);
-            Assert.AreEqual(0.4d, inverse[1, 1]);
+            Assert.AreEqual(0.6d, inverse[0, 0], 1e-9);
+            Assert.AreEqual(-0.7d, inverse[0, 1], 1e-9);
+            Assert.AreEqual(-0.2d, inverse[1, 0], 1e-9);
+            Assert.AreEqual(0.4d, inverse[1, 1], 1e-9);
         }
 
         [Test]
@@ -453,15 +462,23 @@ namespace JamesQMurphy.Math.UnitTests
 
             var matrix = new Matrix<double>(new double[3, 3] { { 3d, 0d, 2d }, { 2d, 0d, -2d }, { 0d, 1d, 1d} });
             var inverse = matrix.Inverse;
-            Assert.AreEqual(0.2d, inverse[0, 0]);
-            Assert.AreEqual(0.2d, inverse[0, 1]);
-            Assert.AreEqual(0d, inverse[0, 2]);
-            Assert.AreEqual(-0.2d, inverse[1, 0]);
-            Assert.AreEqual(0.3d, inverse[1, 1]);
-            Assert.AreEqual(1.0d, inverse[1, 2]);
-            Assert.AreEqual(0.2d, inverse[2, 0]);
-            Assert.AreEqual(-0.3d, inverse[2, 1]);
-            Assert.AreEqual(0d, inverse[2, 2]);
+            Assert.AreEqual(0.2d, inverse[0, 0], 1e-9);
+            Assert.AreEqual(0.2d, inverse[0, 1], 1e-9);
+            Assert.AreEqual(0d, inverse[0, 2], 1e-9);
+            Assert.AreEqual(-0.2d, inverse[1, 0], 1e-9);
+            Assert.AreEqual(0.3d, inverse[1, 1], 1e-9);
+            Assert.AreEqual(1.0d, inverse[1, 2], 1e-9);
+            Assert.AreEqual(0.2d, inverse[2, 0], 1e-9);
+            Assert.AreEqual(-0.3d, inverse[2, 1], 1e-9);
+            Assert.AreEqual(0d, inverse[2, 2], 1e-9);
         }
+
+        [Test]
+        public void Trace_3x3()
+        {
+            var m = new Matrix<int>(new int[3, 3] { { -1, 0, 3 }, { 11, 5, 2 }, { 6, 12, -5 } });
+            Assert.AreEqual(-1, m.Trace);
+        }
+
     }
 }

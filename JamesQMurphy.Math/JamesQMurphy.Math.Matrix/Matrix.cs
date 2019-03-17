@@ -93,7 +93,7 @@ namespace JamesQMurphy.Math
         {
             get
             {
-                if (!IsSquare) throw new InvalidOperationException("Determinant requires matrix to be square");
+                if (!IsSquare) throw new InvalidOperationException("Cannot find the determinant of a nonsquare matrix");
 
                 switch (RowCount)
                 {
@@ -135,15 +135,33 @@ namespace JamesQMurphy.Math
         {
             get
             {
-                throw new NotImplementedException();
+                if (!IsSquare) throw new InvalidOperationException("Cannot find the trace of a nonsquare matrix");
+                T trace = Operations<T>.Zero;
+                for (int i = 0; i < RowCount; i++)
+                {
+                    trace = Operations<T>.Add(trace, this[i,i]);
+                }
+                return trace;
             }
         }
 
-        public Matrix<T> Inverse
+        public Matrix<T> Cofactor
         {
             get
             {
-                throw new NotImplementedException();
+                if (!IsSquare) throw new InvalidOperationException("Cannot find the cofactor of a nonsquare matrix");
+
+                var cofactor = new Matrix<T>(RowCount, ColumnCount);
+                for (int i = 0; i < RowCount; i++)
+                {
+                    for (int j=0; j < ColumnCount; j++)
+                    {
+                        T det = SubMatrix(i, j).Determinant;
+                        cofactor[i, j] = ((i + j) % 2 == 0) ? det : Operations<T>.Subtract(Operations<T>.Zero, det);
+                    }
+                }
+
+                return cofactor;
             }
         }
 
@@ -160,6 +178,22 @@ namespace JamesQMurphy.Math
                     }
                 }
                 return new Matrix<T>(transpose);
+            }
+        }
+
+        public Matrix<T> Inverse
+        {
+            get
+            {
+                if (!IsSquare) throw new InvalidOperationException("Cannot find the inverse of a nonsquare matrix");
+
+                var cofactor = this.Cofactor;
+                T det = Operations<T>.Zero;
+                for (int j = 0; j < ColumnCount; j++)
+                {
+                    det = Operations<T>.Add(det, Operations<T>.Multiply(this[0, j], cofactor[0, j]));
+                }
+                return Matrix<T>.Divide(cofactor.Transpose, det);
             }
         }
 
