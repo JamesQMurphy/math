@@ -167,23 +167,72 @@ namespace JamesQMurphy.Math
 
         public static Matrix<T> Add(Matrix<T> left, Matrix<T> right)
         {
-            throw new NotImplementedException();
+            if (left.RowCount != right.RowCount || left.ColumnCount != right.ColumnCount)
+            {
+                throw new InvalidOperationException("Cannot add matrices with different dimensions");
+            }
+            var result = new Matrix<T>(left.RowCount, left.ColumnCount);
+            for (int i = 0; i < left.RowCount; i++)
+            {
+                for (int j = 0; j < left.ColumnCount; j++)
+                {
+                    result[i, j] = Operations<T>.Add(left[i, j], right[i, j]);
+                }
+            }
+            return result;
         }
         public static Matrix<T> Subtract(Matrix<T> left, Matrix<T> right)
         {
-            throw new NotImplementedException();
+            if (left.RowCount != right.RowCount || left.ColumnCount != right.ColumnCount)
+            {
+                throw new InvalidOperationException("Cannot add matrices with different dimensions");
+            }
+            var result = new Matrix<T>(left.RowCount, left.ColumnCount);
+            for (int i = 0; i < left.RowCount; i++)
+            {
+                for (int j = 0; j < left.ColumnCount; j++)
+                {
+                    result[i, j] = Operations<T>.Subtract(left[i, j], right[i, j]);
+                }
+            }
+            return result;
         }
         public static Matrix<T> Multiply(T left, Matrix<T> right)
         {
-            throw new NotImplementedException();
+            return Matrix<T>.Multiply(right, left);
         }
         public static Matrix<T> Multiply(Matrix<T> left, T right)
         {
-            return Matrix<T>.Multiply(right, left);
+            var result = new Matrix<T>(left.RowCount, left.ColumnCount);
+            for (int i = 0; i < left.RowCount; i++)
+            {
+                for (int j = 0; j < left.ColumnCount; j++)
+                {
+                    result[i, j] = Operations<T>.Multiply(left[i, j], right);
+                }
+            }
+            return result;
         }
         public static Matrix<T> Multiply(Matrix<T> left, Matrix<T> right)
         {
-            throw new NotImplementedException();
+            if (left.ColumnCount != right.RowCount )
+            {
+                throw new InvalidOperationException("Cannot multiply matrices unless the column count of the left equals the row count of the right");
+            }
+            var result = new Matrix<T>(left.RowCount, right.ColumnCount);
+            for (int i = 0; i < left.RowCount; i++)
+            {
+                for (int j = 0; j < right.ColumnCount; j++)
+                {
+                    T sum = Operations<T>.Zero;
+                    for (int inner = 0; inner < left.ColumnCount; inner++)
+                    {
+                        sum = Operations<T>.Add(sum, Operations<T>.Multiply(left[i, inner], right[inner, j]));
+                    }
+                    result[i, j] = sum;
+                }
+            }
+            return result;
         }
         public static Matrix<T> Divide(Matrix<T> left, T right)
         {
@@ -200,6 +249,14 @@ namespace JamesQMurphy.Math
         public static bool operator !=(Matrix<T> left, Matrix<T> right)
         {
             return !Matrix<T>.Equals(left, right);
+        }
+        public static Matrix<T> operator +(Matrix<T> left, Matrix<T> right)
+        {
+            return Add(left, right);
+        }
+        public static Matrix<T> operator -(Matrix<T> left, Matrix<T> right)
+        {
+            return Subtract(left, right);
         }
         public static Matrix<T> operator *(Matrix<T> left, Matrix<T> right)
         {

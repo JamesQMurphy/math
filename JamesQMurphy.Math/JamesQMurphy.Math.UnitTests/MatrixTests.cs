@@ -73,26 +73,99 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
-        public void Add_1x1()
+        public void Add_1x2()
         {
-            Assert.Fail("TODO");
+            var m1 = new Matrix<double>(new double[,] { { 3d, 4d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d } });
+
+            var expected = new Matrix<double>(new double[,] { { 5d, 4d } });
+            Assert.AreEqual(expected, m1 + m2);
         }
 
         [Test]
-        public void Subtract_1x1()
+        public void Add_3x3()
         {
-            Assert.Fail("TODO");
+            var m1 = new Matrix<double>(new double[,] { { 1d, 2d, 4d }, { 3d, 4d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d, -2d }, { 0d, 1d, 2d }, { -4d, 5d, -9d } });
+
+            var expected = new Matrix<double>(new double[,] { { 3d, 2d, 2d }, { 3d, 5d, 8d }, { 3d, 13d, 0d } });
+            Assert.AreEqual(expected, m1 + m2);
         }
 
         [Test]
-        public void Multiply_1x1()
+        public void Add_wrong_dimensions()
         {
-            Assert.Fail("TODO");
+            var m1 = new Matrix<double>(new double[,] { { 1d, 2d, 4d }, { 3d, 4d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d } });
+
+            Assert.Throws<System.InvalidOperationException>(() => { var m3 = m1 + m2; });
         }
 
-        public void Divide_1x1()
+        [Test]
+        public void Subtract_3x3()
         {
-            Assert.Fail("TODO");
+            var m1 = new Matrix<double>(new double[,] { { 1d, 2d, 4d }, { 3d, 4d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d, -2d }, { 0d, 1d, 2d }, { -4d, 5d, -9d } });
+
+            var expected = new Matrix<double>(new double[,] { { -1d, 2d, 6d }, { 3d, 3d, 4d }, { 11d, 3d, 18d } });
+            Assert.AreEqual(expected, m1 - m2);
+        }
+
+        [Test]
+        public void Subtract_wrong_dimensions()
+        {
+            var m1 = new Matrix<double>(new double[,] { { 1d, 2d, 4d }, { 3d, 4d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d } });
+
+            Assert.Throws<System.InvalidOperationException>(() => { var m3 = m1 - m2; });
+        }
+
+        [Test]
+        public void Multiply_constant_by_3x2()
+        {
+            var m = new Matrix<double>(new double[,] { { 1d, 2d }, { 4d, 6d }, { -4d, -2d } });
+
+            var expected = new Matrix<double>(new double[,] { { 3d, 6d }, { 12d, 18d }, { -12d, -6d } });
+            Assert.AreEqual(expected, m * 3d);
+            Assert.AreEqual(expected, 3d * m);
+        }
+
+        [Test]
+        public void Multiply_1x3_by_3x2()
+        {
+            var m1 = new Matrix<double>(new double[,] { { 2d, 3d, 4d } });
+            var m2 = new Matrix<double>(new double[,] { { 1d, 2d }, { 4d, 6d }, { -4d, -2d } });
+
+            var expected = new Matrix<double>(new double[,] { { -2d, 14d } });
+            var actual = m1 * m2;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Multiply_2x2_by_2x2()
+        {
+            var m1 = new Matrix<double>(new double[,] { { 1d, 2d }, { 3d, 4d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d }, { 1d, 2d } });
+
+            var expected = new Matrix<double>(new double[,] { { 4d, 4d }, { 10d, 8d } });
+            Assert.AreEqual(expected, m1 * m2);
+        }
+
+        [Test]
+        public void Multiply_wrong_dimensions()
+        {
+            var m1 = new Matrix<double>(2, 4);
+            var m2 = new Matrix<double>(3, 3);
+            Assert.Throws<System.InvalidOperationException>( () => { var m3 = m1 * m2; });
+        }
+
+        [Test]
+        public void Divide_3x2_by_constant()
+        {
+            var m = new Matrix<double>(new double[,] { { 1d, 2d }, { 4d, 6d }, { -4d, -2d } });
+
+            var expected = new Matrix<double>(new double[,] { { 0.5d, 1d }, { 2d, 3d }, { -2d, -1d } });
+            Assert.AreEqual(expected, m / 2d);
         }
 
         [Test]
