@@ -35,7 +35,20 @@ namespace JamesQMurphy.Math
             {
                 return false;
             }
-            throw new NotImplementedException();
+            Matrix<T> other = (Matrix<T>)obj;
+            if (RowCount != other.RowCount || ColumnCount != other.ColumnCount)
+                return false;
+            for(int i = 0; i < RowCount; i++)
+            {
+                for (int j = 0; j < ColumnCount; j++)
+                {
+                    if (!Object.Equals(this[i,j], other[i,j]))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         public override int GetHashCode()

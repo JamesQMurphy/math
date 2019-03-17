@@ -102,18 +102,76 @@ namespace JamesQMurphy.Math.UnitTests
             var empty2 = Matrix<float>.Empty;
             Assert.AreEqual(empty1, empty2);
             Assert.IsTrue(empty1 == empty2);
+            Assert.IsFalse(empty1 != empty2);
             Assert.IsTrue(empty1.Equals(empty2));
-        }
-
-        public void Equality()
-        {
-            Assert.Fail("TODO");
+            Assert.IsTrue(object.Equals(empty1, empty2));
         }
 
         [Test]
-        public void Inequality()
+        public void Equality_1x1()
         {
-            Assert.Fail("TODO");
+            var m1 = new Matrix<double>(new double[1, 1] { { 6d } });
+            var m2 = new Matrix<double>(1, 1);
+            m2[0, 0] = 6d;
+
+            Assert.AreEqual(m1, m2);
+            Assert.IsTrue(m1 == m2);
+            Assert.IsFalse(m1 != m2);
+            Assert.IsTrue(m1.Equals(m2));
+            Assert.IsTrue(object.Equals(m1, m2));
+        }
+
+        [Test]
+        public void Equality_3x3()
+        {
+            var m1 = new Matrix<double>(new double[3, 3] { { 1d, 2d, 3d }, { 4d, 5d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[3, 3] { { 1d, 2d, 3d }, { 4d, 5d, 6d }, { 7d, 8d, 9d } });
+
+            Assert.AreEqual(m1, m2);
+            Assert.IsTrue(m1 == m2);
+            Assert.IsFalse(m1 != m2);
+            Assert.IsTrue(m1.Equals(m2));
+            Assert.IsTrue(object.Equals(m1, m2));
+        }
+
+        [Test]
+        public void Inequality_1x1()
+        {
+            var m1 = new Matrix<double>(new double[1, 1] { { 6d } });
+            var m2 = new Matrix<double>(1, 1);
+            m2[0, 0] = 7d;
+
+            Assert.AreNotEqual(m1, m2);
+            Assert.IsFalse(m1 == m2);
+            Assert.IsTrue(m1 != m2);
+            Assert.IsFalse(m1.Equals(m2));
+            Assert.IsFalse(object.Equals(m1, m2));
+        }
+
+        [Test]
+        public void Inequality_3x3()
+        {
+            var m1 = new Matrix<double>(new double[3, 3] { { 1d, 2d, 3d }, { 4d, 5d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[3, 3] { { 1d, 2d, 3d }, { 4d, 5d, 6d }, { 7d, 8d, -9d } });
+
+            Assert.AreNotEqual(m1, m2);
+            Assert.IsFalse(m1 == m2);
+            Assert.IsTrue(m1 != m2);
+            Assert.IsFalse(m1.Equals(m2));
+            Assert.IsFalse(object.Equals(m1, m2));
+        }
+
+        [Test]
+        public void Inequality_differentSizes()
+        {
+            var m1 = new Matrix<double>(new double[1, 1] { { 6d } });
+            var m2 = new Matrix<double>(new double[2, 2] { { 6d, 6d }, { 6d, 6d } });
+
+            Assert.AreNotEqual(m1, m2);
+            Assert.IsFalse(m1 == m2);
+            Assert.IsTrue(m1 != m2);
+            Assert.IsFalse(m1.Equals(m2));
+            Assert.IsFalse(object.Equals(m1, m2));
         }
 
 
