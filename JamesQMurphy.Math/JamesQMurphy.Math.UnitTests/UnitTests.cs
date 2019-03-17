@@ -169,6 +169,7 @@ namespace JamesQMurphy.Math.UnitTests
         {
             Assert.AreEqual(24d, Units.Convert(2d, Units.Foot, Units.Inch), 1e-9d);
             Assert.AreEqual(2000d, Units.Convert(2d, Units.Kilometer, Units.Meter), 1e-9d);
+            Assert.AreEqual(1.663e-4, Units.Convert(1d, Units.Furlong / Units.Fortnight, Units.Meter / Units.Second), 1e-7d);
         }
 
         [Test]

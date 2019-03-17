@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using JamesQMurphy.Math;
 using System;
 
 namespace JamesQMurphy.Math.UnitTests
@@ -28,11 +27,21 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
-        public void CanConvert()
+        public void CanConvert1()
         {
             var q = new Quantity(2d, Units.Kilometer);
             Assert.AreEqual(2000d, q.In(Units.Meter));
         }
+
+        [Test]
+        public void CanConvert2()
+        {
+            var q1 = new Quantity(1e6, Units.BritishThermalUnit);
+            var q2 = new Quantity(1.054615, Units.Gigajoule);
+            Assert.AreEqual(q1.In(Units.Joule), q2.In(Units.Joule), 500d);
+        }
+
+
 
         [Test]
         public void CanConvertTemperature()
