@@ -211,11 +211,8 @@ namespace JamesQMurphy.Math
         public static Unit Mole     = new Unit(0, 0, 0, 0, 0, 1, 0, 1.0d);
         public static Unit Candela  = new Unit(0, 0, 0, 0, 0, 0, 1, 1.0d);
 
-        // SI Prefixed units
-        public static Unit Kilometer = new Unit(1, 0, 0, 0, 0, 0, 0, 0.001d, "km");
-
         // SI Derived Units
-        public static Unit Liter   = new Unit(3, 0, 0, 0, 0, 0, 0, 1000d, "L");
+        public static Unit Liter   = new Unit(3, 0, 0, 0, 0, 0, 0, 1e3d, "L");
         public static Unit Hertz   = new Unit(0, 0, -1, 0, 0, 0, 0, 1.0d, "Hz");
         public static Unit Newton  = new Unit(1, 1, -2, 0, 0, 0, 0, 1.0d, "N");
         public static Unit Pascal  = new Unit(-1, 1, -2, 0, 0, 0, 0, 1.0d, "Pa");
@@ -230,13 +227,35 @@ namespace JamesQMurphy.Math
         public static Unit Tesla   = new Unit(0, 1, -2, -1, 0, 0, 0, 1.0d, "T");
         public static Unit Henry   = new Unit(2, 1, -2, -2, 0, 0, 0, 1.0d, "H");
 
+        // SI Prefixed units
+        public static Unit Kilometer = new Unit(1, 0, 0, 0, 0, 0, 0, 1e-3d, "km");
+        public static Unit Centometer = new Unit(1, 0, 0, 0, 0, 0, 0, 1e2d, "cm");
+        public static Unit Millimeter = new Unit(1, 0, 0, 0, 0, 0, 0, 1e3d, "mm");
+        public static Unit Micrometer = new Unit(1, 0, 0, 0, 0, 0, 0, 1e6d, "μm");
+        public static Unit Nanometer = new Unit(1, 0, 0, 0, 0, 0, 0, 1e9d, "nm");
+
+        public static Unit Gigajoule = new Unit(2, 1, -2, 0, 0, 0, 0, 1e-9d, "GJ");
+        public static Unit Megajoule = new Unit(2, 1, -2, 0, 0, 0, 0, 1e-6d, "MJ");
+        public static Unit Kilojoule = new Unit(2, 1, -2, 0, 0, 0, 0, 1e-3d, "kJ");
+        public static Unit Millijoule = new Unit(2, 1, -2, 0, 0, 0, 0, 1e3d, "mJ");
+        public static Unit Microjoule = new Unit(2, 1, -2, 0, 0, 0, 0, 1e6d, "μJ");
+        public static Unit Nanojoule = new Unit(2, 1, -2, 0, 0, 0, 0, 1e9d, "nJ");
+
         // Other SI Units
+        public static Unit Erg = new Unit(2, 1, -2, 0, 0, 0, 0, 1e7d, "erg");
 
         // Imperial units
         // Source: https://www.unitconverters.net
+        public static Unit Mile = new Unit(1, 0, 0, 0, 0, 0, 0, 6.21371192e-4d, "mi");
+        public static Unit Furlong = new Unit(1, 0, 0, 0, 0, 0, 0, 0.00497097d, "fur");
         public static Unit Yard = new Unit(1, 0, 0, 0, 0, 0, 0, 1.0936132983d, "yd");
         public static Unit Foot = new Unit(1, 0, 0, 0, 0, 0, 0, 3.280839895d, "ft");
         public static Unit Inch = new Unit(1, 0, 0, 0, 0, 0, 0, 39.37007874d, "in");
+
+        public static Unit Firkin = new Unit(0, 1, 0, 0, 0, 0, 0, 0.0244958069d, "fir");
+
+        public static Unit Fortnight = new Unit(0, 0, 1, 0, 0, 0, 0, 8.2671957672e-7, "ftn");
+        public static Unit BritishThermalUnit = new Unit(2, 1, -2, 0, 0, 0, 0, 0.948213e-3, "Btu");
         public static Unit Rankine = new Unit(0, 0, 0, 0, 1, 0, 0, 1.8d, "°R");
 
         // Temperature units use special converters
