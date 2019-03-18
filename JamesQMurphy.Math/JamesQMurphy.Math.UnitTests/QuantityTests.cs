@@ -41,7 +41,27 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.AreEqual(q1.In(Units.Joule), q2.In(Units.Joule), 500d);
         }
 
+        [Test]
+        public void Inequality_null()
+        {
+            var q = new Quantity();
+            Assert.IsFalse(q.Equals(null));
+            Assert.IsFalse(object.Equals(q, null));
+        }
 
+        [Test]
+        public void WorksWithListContains()
+        {
+            var q = new Quantity(1.0d, Units.Meter);
+            var same = new Quantity(1000.0d, Units.Millimeter);
+            var different = new Quantity(2.0d, Units.Meter);
+
+            var lst = new System.Collections.Generic.List<Quantity>();
+            lst.Add(different);
+            Assert.IsFalse(lst.Contains(q));
+            lst.Add(same);
+            Assert.IsTrue(lst.Contains(q));
+        }
 
         [Test]
         public void CanConvertTemperature()

@@ -5,7 +5,7 @@ namespace JamesQMurphy.Math
 {
     // see https://physics.nist.gov/cuu/Units/units.html
 
-    public readonly struct UnitExponents
+    public readonly struct UnitExponents : IEquatable<UnitExponents>
     {
         private const string _meterSymbol = "m";
         private const string _kilgogramSymbol = "kg";
@@ -101,9 +101,14 @@ namespace JamesQMurphy.Math
 
         public override bool Equals(object obj)
         {
-            if (obj.GetType() != typeof(UnitExponents))
+            if (obj is UnitExponents)
+            {
+                return Equals((UnitExponents)obj);
+            }
+            else
+            {
                 return false;
-            return UnitExponents.Equals(this, (UnitExponents)obj);
+            }
         }
 
         public override int GetHashCode()
@@ -115,6 +120,11 @@ namespace JamesQMurphy.Math
                    ((int)_temperature << 16) &
                    ((int)_amountOfSubstance << 20) &
                    ((int)_luminousIntensity << 24);
+        }
+
+        public bool Equals(UnitExponents other)
+        {
+            return Equals(this, other);
         }
 
         public static bool Equals(UnitExponents left, UnitExponents right)

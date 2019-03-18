@@ -4,7 +4,7 @@ using System.Text;
 
 namespace JamesQMurphy.Math
 {
-    public class Unit
+    public class Unit : IEquatable<Unit>
     {
         public UnitExponents UnitExponents { get; }
         public string Symbol { get; }
@@ -116,11 +116,14 @@ namespace JamesQMurphy.Math
 
         public override bool Equals(object obj)
         {
-            if (obj.GetType() != typeof(Unit))
+            if (obj is Unit)
+            {
+                return Equals(this, (Unit)obj);
+            }
+            else
             {
                 return false;
             }
-            return Unit.Equals(this, (Unit)obj);
         }
 
         public override int GetHashCode()
@@ -128,8 +131,21 @@ namespace JamesQMurphy.Math
             return UnitExponents.GetHashCode() ^ _conversionFactor.GetHashCode();
         }
 
+        public bool Equals(Unit other)
+        {
+            return Equals(this, other);
+        }
+
         public static bool Equals(Unit left, Unit right)
         {
+            if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            if ((left is null) || (right is null))
+            {
+                return false;
+            }
             return (left.UnitExponents == right.UnitExponents)
                 && (left._conversionFactor == right._conversionFactor)
                 && (left._conversionFactor != 0d)
