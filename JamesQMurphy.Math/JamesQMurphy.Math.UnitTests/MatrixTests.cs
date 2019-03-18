@@ -2,9 +2,9 @@ using NUnit.Framework;
 using JamesQMurphy.Math;
 using System.Numerics;
 
-namespace Tests
+namespace JamesQMurphy.Math.UnitTests
 {
-    public class Tests
+    public class MatrixTests
     {
         [SetUp]
         public void Setup()
@@ -71,6 +71,182 @@ namespace Tests
             Assert.AreEqual(originalValue, matrix[0, 0]);
 
         }
+
+        [Test]
+        public void Add_1x2()
+        {
+            var m1 = new Matrix<double>(new double[,] { { 3d, 4d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d } });
+
+            var expected = new Matrix<double>(new double[,] { { 5d, 4d } });
+            Assert.AreEqual(expected, m1 + m2);
+        }
+
+        [Test]
+        public void Add_3x3()
+        {
+            var m1 = new Matrix<double>(new double[,] { { 1d, 2d, 4d }, { 3d, 4d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d, -2d }, { 0d, 1d, 2d }, { -4d, 5d, -9d } });
+
+            var expected = new Matrix<double>(new double[,] { { 3d, 2d, 2d }, { 3d, 5d, 8d }, { 3d, 13d, 0d } });
+            Assert.AreEqual(expected, m1 + m2);
+        }
+
+        [Test]
+        public void Add_wrong_dimensions()
+        {
+            var m1 = new Matrix<double>(new double[,] { { 1d, 2d, 4d }, { 3d, 4d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d } });
+
+            Assert.Throws<System.InvalidOperationException>(() => { var m3 = m1 + m2; });
+        }
+
+        [Test]
+        public void Subtract_3x3()
+        {
+            var m1 = new Matrix<double>(new double[,] { { 1d, 2d, 4d }, { 3d, 4d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d, -2d }, { 0d, 1d, 2d }, { -4d, 5d, -9d } });
+
+            var expected = new Matrix<double>(new double[,] { { -1d, 2d, 6d }, { 3d, 3d, 4d }, { 11d, 3d, 18d } });
+            Assert.AreEqual(expected, m1 - m2);
+        }
+
+        [Test]
+        public void Subtract_wrong_dimensions()
+        {
+            var m1 = new Matrix<double>(new double[,] { { 1d, 2d, 4d }, { 3d, 4d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d } });
+
+            Assert.Throws<System.InvalidOperationException>(() => { var m3 = m1 - m2; });
+        }
+
+        [Test]
+        public void Multiply_constant_by_3x2()
+        {
+            var m = new Matrix<double>(new double[,] { { 1d, 2d }, { 4d, 6d }, { -4d, -2d } });
+
+            var expected = new Matrix<double>(new double[,] { { 3d, 6d }, { 12d, 18d }, { -12d, -6d } });
+            Assert.AreEqual(expected, m * 3d);
+            Assert.AreEqual(expected, 3d * m);
+        }
+
+        [Test]
+        public void Multiply_1x3_by_3x2()
+        {
+            var m1 = new Matrix<double>(new double[,] { { 2d, 3d, 4d } });
+            var m2 = new Matrix<double>(new double[,] { { 1d, 2d }, { 4d, 6d }, { -4d, -2d } });
+
+            var expected = new Matrix<double>(new double[,] { { -2d, 14d } });
+            var actual = m1 * m2;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Multiply_2x2_by_2x2()
+        {
+            var m1 = new Matrix<double>(new double[,] { { 1d, 2d }, { 3d, 4d } });
+            var m2 = new Matrix<double>(new double[,] { { 2d, 0d }, { 1d, 2d } });
+
+            var expected = new Matrix<double>(new double[,] { { 4d, 4d }, { 10d, 8d } });
+            Assert.AreEqual(expected, m1 * m2);
+        }
+
+        [Test]
+        public void Multiply_wrong_dimensions()
+        {
+            var m1 = new Matrix<double>(2, 4);
+            var m2 = new Matrix<double>(3, 3);
+            Assert.Throws<System.InvalidOperationException>( () => { var m3 = m1 * m2; });
+        }
+
+        [Test]
+        public void Divide_3x2_by_constant()
+        {
+            var m = new Matrix<double>(new double[,] { { 1d, 2d }, { 4d, 6d }, { -4d, -2d } });
+
+            var expected = new Matrix<double>(new double[,] { { 0.5d, 1d }, { 2d, 3d }, { -2d, -1d } });
+            Assert.AreEqual(expected, m / 2d);
+        }
+
+        [Test]
+        public void Equality_empty()
+        {
+            var empty1 = new Matrix<float>();
+            var empty2 = Matrix<float>.Empty;
+            Assert.AreEqual(empty1, empty2);
+            Assert.IsTrue(empty1 == empty2);
+            Assert.IsFalse(empty1 != empty2);
+            Assert.IsTrue(empty1.Equals(empty2));
+            Assert.IsTrue(object.Equals(empty1, empty2));
+        }
+
+        [Test]
+        public void Equality_1x1()
+        {
+            var m1 = new Matrix<double>(new double[1, 1] { { 6d } });
+            var m2 = new Matrix<double>(1, 1);
+            m2[0, 0] = 6d;
+
+            Assert.AreEqual(m1, m2);
+            Assert.IsTrue(m1 == m2);
+            Assert.IsFalse(m1 != m2);
+            Assert.IsTrue(m1.Equals(m2));
+            Assert.IsTrue(object.Equals(m1, m2));
+        }
+
+        [Test]
+        public void Equality_3x3()
+        {
+            var m1 = new Matrix<double>(new double[3, 3] { { 1d, 2d, 3d }, { 4d, 5d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[3, 3] { { 1d, 2d, 3d }, { 4d, 5d, 6d }, { 7d, 8d, 9d } });
+
+            Assert.AreEqual(m1, m2);
+            Assert.IsTrue(m1 == m2);
+            Assert.IsFalse(m1 != m2);
+            Assert.IsTrue(m1.Equals(m2));
+            Assert.IsTrue(object.Equals(m1, m2));
+        }
+
+        [Test]
+        public void Inequality_1x1()
+        {
+            var m1 = new Matrix<double>(new double[1, 1] { { 6d } });
+            var m2 = new Matrix<double>(1, 1);
+            m2[0, 0] = 7d;
+
+            Assert.AreNotEqual(m1, m2);
+            Assert.IsFalse(m1 == m2);
+            Assert.IsTrue(m1 != m2);
+            Assert.IsFalse(m1.Equals(m2));
+            Assert.IsFalse(object.Equals(m1, m2));
+        }
+
+        [Test]
+        public void Inequality_3x3()
+        {
+            var m1 = new Matrix<double>(new double[3, 3] { { 1d, 2d, 3d }, { 4d, 5d, 6d }, { 7d, 8d, 9d } });
+            var m2 = new Matrix<double>(new double[3, 3] { { 1d, 2d, 3d }, { 4d, 5d, 6d }, { 7d, 8d, -9d } });
+
+            Assert.AreNotEqual(m1, m2);
+            Assert.IsFalse(m1 == m2);
+            Assert.IsTrue(m1 != m2);
+            Assert.IsFalse(m1.Equals(m2));
+            Assert.IsFalse(object.Equals(m1, m2));
+        }
+
+        [Test]
+        public void Inequality_differentSizes()
+        {
+            var m1 = new Matrix<double>(new double[1, 1] { { 6d } });
+            var m2 = new Matrix<double>(new double[2, 2] { { 6d, 6d }, { 6d, 6d } });
+
+            Assert.AreNotEqual(m1, m2);
+            Assert.IsFalse(m1 == m2);
+            Assert.IsTrue(m1 != m2);
+            Assert.IsFalse(m1.Equals(m2));
+            Assert.IsFalse(object.Equals(m1, m2));
+        }
+
 
         [Test]
         public void Submatrix_3x4()
@@ -203,5 +379,106 @@ namespace Tests
                                                                  { -11m, 1m, 0m, 5m, 2m } });
             Assert.AreEqual(31170m, matrix.Determinant);
         }
+
+
+        [Test]
+        public void Transpose_empty()
+        {
+            Matrix<double> matrix;
+            var transpose = matrix.Transpose;
+            Assert.AreEqual(0, transpose.RowCount);
+            Assert.AreEqual(0, transpose.ColumnCount);
+        }
+
+        [Test]
+        public void Transpose_1x1()
+        {
+            Matrix<double> matrix = new Matrix<double>(1, 1);
+            var value = 4.0d;
+            matrix[0, 0] = value;
+            var transpose = matrix.Transpose;
+            Assert.AreEqual(1, transpose.RowCount);
+            Assert.AreEqual(1, transpose.ColumnCount);
+            Assert.AreEqual(value, transpose[0, 0]);
+        }
+
+        [Test]
+        public void Transpose_1x3()
+        {
+            Matrix<double> matrix = new Matrix<double>(1, 3);
+            var value1 = 4.0d;
+            var value2 = 5.0d;
+            var value3 = -3.0d;
+            matrix[0, 0] = value1;
+            matrix[0, 1] = value2;
+            matrix[0, 2] = value3;
+            var transpose = matrix.Transpose;
+            Assert.AreEqual(3, transpose.RowCount);
+            Assert.AreEqual(1, transpose.ColumnCount);
+            Assert.AreEqual(value1, transpose[0, 0]);
+            Assert.AreEqual(value2, transpose[1, 0]);
+            Assert.AreEqual(value3, transpose[2, 0]);
+        }
+
+        [Test]
+        public void Transpose_4x3()
+        {
+            var arr = new int[,] { { 2, 3, 4 }, { 10, -3, 5 }, { 7, 7, 7 }, { -1, -1, 3 } };
+
+            Matrix<int> matrix = new Matrix<int>(arr);
+            var transpose = matrix.Transpose;
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 3; j++)
+                {
+                    Assert.AreEqual(arr[i, j], transpose[j, i]);
+                }
+
+        }
+
+        [Test]
+        public void Cofactor()
+        {
+            var m = new Matrix<double>(new double[,] { { 3d, 0d, 2d }, { 2d, 0d, -2d }, { 0d, 1d, 1d } });
+
+            var expected = new Matrix<double>(new double[,] { { 2d, -2d, 2d }, { 2d, 3d, -3d }, { 0d, 10d, 0d } });
+            Assert.AreEqual(expected, m.Cofactor);
+        }
+
+        [Test]
+        public void Inverse_2x2()
+        {
+            var matrix = new Matrix<double>(new double[2, 2] { { 4d, 7d }, { 2d, 6d } });
+            var inverse = matrix.Inverse;
+            Assert.AreEqual(0.6d, inverse[0, 0], 1e-9);
+            Assert.AreEqual(-0.7d, inverse[0, 1], 1e-9);
+            Assert.AreEqual(-0.2d, inverse[1, 0], 1e-9);
+            Assert.AreEqual(0.4d, inverse[1, 1], 1e-9);
+        }
+
+        [Test]
+        public void Inverse_3x3()
+        {
+            // https://www.mathsisfun.com/algebra/matrix-inverse-minors-cofactors-adjugate.html
+
+            var matrix = new Matrix<double>(new double[3, 3] { { 3d, 0d, 2d }, { 2d, 0d, -2d }, { 0d, 1d, 1d} });
+            var inverse = matrix.Inverse;
+            Assert.AreEqual(0.2d, inverse[0, 0], 1e-9);
+            Assert.AreEqual(0.2d, inverse[0, 1], 1e-9);
+            Assert.AreEqual(0d, inverse[0, 2], 1e-9);
+            Assert.AreEqual(-0.2d, inverse[1, 0], 1e-9);
+            Assert.AreEqual(0.3d, inverse[1, 1], 1e-9);
+            Assert.AreEqual(1.0d, inverse[1, 2], 1e-9);
+            Assert.AreEqual(0.2d, inverse[2, 0], 1e-9);
+            Assert.AreEqual(-0.3d, inverse[2, 1], 1e-9);
+            Assert.AreEqual(0d, inverse[2, 2], 1e-9);
+        }
+
+        [Test]
+        public void Trace_3x3()
+        {
+            var m = new Matrix<int>(new int[3, 3] { { -1, 0, 3 }, { 11, 5, 2 }, { 6, 12, -5 } });
+            Assert.AreEqual(-1, m.Trace);
+        }
+
     }
 }
