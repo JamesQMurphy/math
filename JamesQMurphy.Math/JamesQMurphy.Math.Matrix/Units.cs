@@ -245,7 +245,7 @@ namespace JamesQMurphy.Math
 
         // SI Prefixed units
         public static Unit Kilometer = new Unit(1, 0, 0, 0, 0, 0, 0, 1e-3d, "km");
-        public static Unit Centometer = new Unit(1, 0, 0, 0, 0, 0, 0, 1e2d, "cm");
+        public static Unit Centimeter = new Unit(1, 0, 0, 0, 0, 0, 0, 1e2d, "cm");
         public static Unit Millimeter = new Unit(1, 0, 0, 0, 0, 0, 0, 1e3d, "mm");
         public static Unit Micrometer = new Unit(1, 0, 0, 0, 0, 0, 0, 1e6d, "μm");
         public static Unit Nanometer = new Unit(1, 0, 0, 0, 0, 0, 0, 1e9d, "nm");
