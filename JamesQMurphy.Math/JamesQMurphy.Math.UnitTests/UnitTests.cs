@@ -56,7 +56,27 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.IsFalse(object.Equals(u1, u3));
         }
 
+        [Test]
+        public void Inequality_null()
+        {
+            var u = new Unit(new UnitExponents(), 1.0d);
+            Assert.IsFalse(u.Equals(null));
+            Assert.IsFalse(object.Equals(u, null));
+        }
 
+        [Test]
+        public void WorksWithListContains()
+        {
+            var u = new Unit(1, 1, 1, 1, 1, 1, 1, 1.0d, "x");
+            var same = new Unit(1, 1, 1, 1, 1, 1, 1, 1.0d, "y");
+            var different = new Unit(2, 1, 1, 1, 1, 1, 1, 1.0d, "x");
+
+            var lst = new System.Collections.Generic.List<Unit>();
+            lst.Add(different);
+            Assert.IsFalse(lst.Contains(u));
+            lst.Add(same);
+            Assert.IsTrue(lst.Contains(u));
+        }
 
         [Test]
         public void CanMultiply()

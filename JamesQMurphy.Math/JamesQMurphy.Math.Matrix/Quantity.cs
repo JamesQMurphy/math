@@ -4,7 +4,7 @@ using System.Text;
 
 namespace JamesQMurphy.Math
 {
-    public readonly struct Quantity
+    public readonly struct Quantity : IEquatable<Quantity>
     {
         private readonly double _SIvalue;
         private readonly UnitExponents _unitExponents;
@@ -65,16 +65,20 @@ namespace JamesQMurphy.Math
 
         public override bool Equals(object obj)
         {
-            if (obj.GetType() != typeof(Quantity))
-            {
+            if (obj is Quantity)
+                return Equals((Quantity)obj);
+            else
                 return false;
-            }
-            return Quantity.Equals(this, (Quantity)obj);
         }
 
         public override int GetHashCode()
         {
             return _SIvalue.GetHashCode() ^ _unitExponents.GetHashCode();
+        }
+
+        public bool Equals(Quantity other)
+        {
+            return Equals(this, other);
         }
 
         public static bool Equals(Quantity left, Quantity right)

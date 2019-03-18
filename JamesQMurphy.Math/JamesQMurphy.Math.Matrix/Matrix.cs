@@ -2,7 +2,7 @@
 
 namespace JamesQMurphy.Math
 {
-    public struct Matrix<T> where T : struct
+    public struct Matrix<T> : IEquatable<Matrix<T>> where T : struct
     {
         #region Static Members
         private static T[,] _emptyArray = new T[0, 0];
@@ -31,18 +31,31 @@ namespace JamesQMurphy.Math
 
         public override bool Equals(object obj)
         {
-            if (obj.GetType() != typeof(Matrix<T>))
+            if (obj is Matrix<T>)
+            {
+                return Equals((Matrix<T>)obj);
+            }
+            else
             {
                 return false;
             }
-            Matrix<T> other = (Matrix<T>)obj;
+            
+        }
+
+        public override int GetHashCode()
+        {
+            return _array.GetHashCode();
+        }
+
+        public bool Equals(Matrix<T> other)
+        {
             if (RowCount != other.RowCount || ColumnCount != other.ColumnCount)
                 return false;
-            for(int i = 0; i < RowCount; i++)
+            for (int i = 0; i < RowCount; i++)
             {
                 for (int j = 0; j < ColumnCount; j++)
                 {
-                    if (!Object.Equals(this[i,j], other[i,j]))
+                    if (!Object.Equals(this[i, j], other[i, j]))
                     {
                         return false;
                     }
@@ -51,10 +64,6 @@ namespace JamesQMurphy.Math
             return true;
         }
 
-        public override int GetHashCode()
-        {
-            return _array.GetHashCode();
-        }
 
         public int RowCount
         {

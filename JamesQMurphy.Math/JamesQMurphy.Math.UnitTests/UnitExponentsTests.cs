@@ -115,7 +115,27 @@ namespace JamesQMurphy.Math.UnitTests
             Assert.IsFalse(object.Equals(ue1, ue3));
         }
 
+        [Test]
+        public void Inequality_null()
+        {
+            var ue = new UnitExponents();
+            Assert.IsFalse(ue.Equals(null));
+            Assert.IsFalse(object.Equals(ue, null));
+        }
 
+        [Test]
+        public void WorksWithListContains()
+        {
+            var ue = new UnitExponents(1, 1, 1, 1, 1, 1, 1);
+            var same = new UnitExponents(1, 1, 1, 1, 1, 1, 1);
+            var different = new UnitExponents(2, 1, 1, 1, 1, 1, 1);
+
+            var lst = new System.Collections.Generic.List<UnitExponents>();
+            lst.Add(different);
+            Assert.IsFalse(lst.Contains(ue));
+            lst.Add(same);
+            Assert.IsTrue(lst.Contains(ue));
+        }
 
         [Test]
         public void CanMultiply()

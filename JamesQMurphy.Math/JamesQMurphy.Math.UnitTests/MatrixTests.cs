@@ -208,6 +208,28 @@ namespace JamesQMurphy.Math.UnitTests
         }
 
         [Test]
+        public void Inequality_null()
+        {
+            var m = new Matrix<float>();
+            Assert.IsFalse(m.Equals(null));
+            Assert.IsFalse(object.Equals(m, null));
+        }
+
+        [Test]
+        public void WorksWithListContains()
+        {
+            var m = new Matrix<double>(new double[,] { { 1d, 2d }, { 3d, 4d } });
+            var same = new Matrix<double>(new double[,] { { 1d, 2d }, { 3d, 4d } }); ;
+            var different = new Matrix<double>(new double[,] { { 1d, 2d }, { 3d, -4d } }); ;
+
+            var lst = new System.Collections.Generic.List<Matrix<double>>();
+            lst.Add(different);
+            Assert.IsFalse(lst.Contains(m));
+            lst.Add(same);
+            Assert.IsTrue(lst.Contains(m));
+        }
+
+        [Test]
         public void Inequality_1x1()
         {
             var m1 = new Matrix<double>(new double[1, 1] { { 6d } });
